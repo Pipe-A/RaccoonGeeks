@@ -12,7 +12,6 @@ public class ControladorProfesor {
         this.listaProfes = listaProfes;
     }
 
-    // CRUD
     public Profesor buscarProfesor(String usuario){
         if(this.listaProfes.containsKey(usuario)){
             return this.listaProfes.get(usuario);
@@ -21,8 +20,8 @@ public class ControladorProfesor {
     }
 
     public void insertarProfesor(Profesor profesorNuevo){
-        if (buscarProfesor(profesorNuevo.getUsuarioProfe()) == null) {
-            this.listaProfes.put(profesorNuevo.getUsuarioProfe(), profesorNuevo);
+        if (buscarProfesor(profesorNuevo.getUsuario()) == null) {
+            this.listaProfes.put(profesorNuevo.getUsuario(), profesorNuevo);
             System.out.println("Profesor registrado con éxito!");
             System.out.println(profesorNuevo.toString());
         }
@@ -43,10 +42,10 @@ public class ControladorProfesor {
     }
 
     public void modificarProfesoresBasico(Profesor profesor, String nuevaContrasenna){
-        if (buscarProfesor(profesor.getUsuarioProfe()) != null) {
+        if (buscarProfesor(profesor.getUsuario()) != null) {
             System.out.println("Profesor encontrado!");
             System.out.println(profesor.toString());
-            profesor.setContrasennaProfe(nuevaContrasenna);
+            profesor.setContrasenna(nuevaContrasenna);
             System.out.println("Los datos actualizados del profesor son: ");
             System.out.println(profesor.toString());
         }
@@ -56,17 +55,16 @@ public class ControladorProfesor {
     }
 
     public void eliminarProfesor(Profesor profesor){
-        if (buscarProfesor(profesor.getUsuarioProfe()) != null) {
+        if (buscarProfesor(profesor.getUsuario()) != null) {
             System.out.println("Profesor encontrado!");
             System.out.println(profesor.toString());
             // this.listaClientes.remove(this.listaClientes.indexOf(cliente));
-            this.listaProfes.remove(profesor.getUsuarioProfe());
+            this.listaProfes.remove(profesor.getUsuario());
             System.out.println("El profesor ha sido eliminado con exito! ");
         }
         else{
             System.out.println("El profesor no existe, intente nuevamente");
         }
     }
-
 
 }

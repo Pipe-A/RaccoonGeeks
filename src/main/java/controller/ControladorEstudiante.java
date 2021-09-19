@@ -1,5 +1,6 @@
 package controller;
 
+import model.Administrativo;
 import model.Estudiante;
 
 import java.util.HashMap;
@@ -12,7 +13,6 @@ public class ControladorEstudiante {
     }
     public void setListaEstudiantes(Map<String, Estudiante> listaEstudiantes) { this.listaEstudiantes = listaEstudiantes; }
 
-    // CRUD
     public Estudiante buscarEstudiante(String usuario){
         if(this.listaEstudiantes.containsKey(usuario)){
             return this.listaEstudiantes.get(usuario);
@@ -21,14 +21,13 @@ public class ControladorEstudiante {
     }
 
     public void insertarEstudiante(Estudiante nuevoEstudiante){
-        if (buscarEstudiante(nuevoEstudiante.getUsuarioEstud()) == null) {
-            this.listaEstudiantes.put(nuevoEstudiante.getUsuarioEstud(), nuevoEstudiante);
+        if (buscarEstudiante(nuevoEstudiante.getUsuario()) == null) {
+            this.listaEstudiantes.put(nuevoEstudiante.getUsuario(), nuevoEstudiante);
             System.out.println("Cliente registrado con éxito!");
             System.out.println(nuevoEstudiante.toString());
         }
         else{
             System.out.println("Ya existe un estudiante con este nombre de Usuario, inténtelo nuevamente!");
-            //throw new ExcCliente("Ya existe un cliente con este número de cedula, inténtelo nuevamente!");
         }
     }
 
@@ -43,9 +42,9 @@ public class ControladorEstudiante {
     }
 
     public void modificarEstudianteBasico(Estudiante estudiante, String nuevaContrasenna, String nuevoNombre, String nuevaCarrera){
-        if (buscarEstudiante(estudiante.getUsuarioEstud()) != null) {
-            estudiante.setContrasennaEstud(nuevaContrasenna);
-            estudiante.setNombreEstud(nuevoNombre);
+        if (buscarEstudiante(estudiante.getUsuario()) != null) {
+            estudiante.setContrasenna(nuevaContrasenna);
+            estudiante.setNombre(nuevoNombre);
             estudiante.setCarreraEstud(nuevaCarrera);
             System.out.println("Los datos actualizados del profesor son: ");
             System.out.println(estudiante.toString());
@@ -56,11 +55,11 @@ public class ControladorEstudiante {
     }
 
     public void eliminarEstudiante(Estudiante estudiante){
-        if (buscarEstudiante(estudiante.getUsuarioEstud()) != null) {
+        if (buscarEstudiante(estudiante.getUsuario()) != null) {
             System.out.println("Estudiante encontrado! ");
             System.out.println(estudiante.toString());
             // this.listaClientes.remove(this.listaClientes.indexOf(cliente));
-            this.listaEstudiantes.remove(estudiante.getUsuarioEstud());
+            this.listaEstudiantes.remove(estudiante.getUsuario());
             System.out.println("El estudiante ha sido eliminado con exito! ");
         }
         else{

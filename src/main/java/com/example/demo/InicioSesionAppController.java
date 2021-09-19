@@ -1,20 +1,26 @@
 package com.example.demo;
 
 import controller.ControladorGeneral;
+import jakarta.xml.bind.JAXBException;
+import java.beans.XMLEncoder;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.Estudiante;
+import model.TipoGeneral;
+import model.Usuario;
 import utils.AlertUtils;
 
-import java.io.IOError;
-import java.io.IOException;
+
+import utils.FileUtils;
+
+import java.io.*;
 
 public class InicioSesionAppController {
     private ControladorGeneral controladorGeneral=new ControladorGeneral();
@@ -31,6 +37,108 @@ public class InicioSesionAppController {
     private Stage stage;
 
     @FXML
+    private Button ButtonGenerarArchivo;
+    @FXML
+    private Label text_NombreUsuario;
+
+    @FXML
+    private Button btn_CerrarSesionEstudiante;
+
+    @FXML
+    private Tab tab_Actividades;
+
+    @FXML
+    private TableView<?> tableView_Actividades;
+
+    @FXML
+    private TableColumn<?, ?> col_Actividad;
+
+    @FXML
+    private TableColumn<?, ?> col_FechaEntregaACT;
+
+    @FXML
+    private Tab tab_Actividades1;
+
+    @FXML
+    private TableView<?> tableView_Examenes;
+
+    @FXML
+    private TableColumn<?, ?> col_Examenes;
+
+    @FXML
+    private TableColumn<?, ?> col_FechaEntregaEXA;
+
+    @FXML
+    private Tab tab_Notas;
+
+    @FXML
+    private TableView<?> tableView_Notas_Actividad;
+
+    @FXML
+    private TableColumn<?, ?> col_Actividad_Notas;
+
+    @FXML
+    private TableColumn<?, ?> col_Notas_Actividad;
+
+    @FXML
+    private TableView<?> tableView_Notas_Examenes;
+
+    @FXML
+    private TableColumn<?, ?> col_Examen_Nombre;
+
+    @FXML
+    private TableColumn<?, ?> col_Examen_Nota;
+
+    @FXML
+    private PieChart grafica_Pie;
+
+    @FXML
+    private Tab tab_Calendario;
+
+    @FXML
+    private ChoiceBox<?> chBox_listaMaterias;
+
+    @FXML
+    void cerrarSesionEstudiante(ActionEvent event) {
+
+    }
+    @FXML
+    void generarArchivo(ActionEvent event) {
+        Usuario usr1= new Estudiante("Pepe","pepe1","Pepitp","pepa","Sistemas",123124L, TipoGeneral.ESTUDIANTE,null );
+        controladorGeneral.guardarUsuario(usr1);
+
+/*
+        controladorGeneral.getReportesUsuarios().setUsuarios(controladorGeneral.getUsuarios());
+        FileChooser.ExtensionFilter filtro = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        File ruta = AlertUtils.openFileChooserModeWrite(filtro, ((Button) event.getSource()).getScene().getWindow());
+        try {
+            if (controladorGeneral.getUsuarios().size() == 0){
+                AlertUtils.alertError("Vacio","Archivo vacio","El archivo esta vacio");
+            }
+            FileUtils.saveXML(ruta, controladorGeneral.getReportesUsuarios());
+            AlertUtils.alertConfirmation("Generar reporte", "El reporte de los usuarios se ha generado exitosamente", "Presiona OK para continuar");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            AlertUtils.alertError("Error", "No se pueden obtener los usuarios", "Revise los datos que ingresó e inténtelo de nuevo");
+        } catch (JAXBException jex) {
+            jex.printStackTrace();
+            AlertUtils.alertError("Error", "No se pueden obtener los usuarios", "Revise los datos que ingresó e inténtelo de nuevo");
+        }
+
+        /*OutputStream out;
+        try {
+            out = new FileOutputStream("C:\\Users\\willi\\Documents\\ProyectoIngesoft\\Proyecto\\RaccoonGeeks\\Prueba.xml");
+            java.beans.XMLEncoder encoder = new XMLEncoder(out);
+            for(Usuario usr: controladorGeneral.getControlEstu().getListaEstudiantes().values()){
+                encoder.writeObject(usr);
+            }
+            encoder.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+    }
+
+    @FXML
     void iniciarSesion(ActionEvent event){
         String usuario = fieldUsuario.getText();
         String contraseña = fieldContraseña.getText();
@@ -38,6 +146,7 @@ public class InicioSesionAppController {
             int tipoUsuario = controladorGeneral.comprobarTipoUsuario(usuario, contraseña);
             switch (tipoUsuario) {
                 case 1:
+                    mostrarPantallaEstudiante();
                     break;
                 case 2:
                     break;
@@ -55,19 +164,23 @@ public class InicioSesionAppController {
     }
 
     public void mostrarPantallaEstudiante() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/com.example.demo/PONER AQUI"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/com.example.demo/PantallaEstudiantes.fxml"));
         Parent root = loader.load();
         PantallaEstudianteController controller = loader.getController();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
-        controller.init(/*AQUI PONER LOS PARAMETROS PARA PASAR, stage, this*/);
+        controller.init(fieldUsuario.getText(),stage,this);
         stage.show();
         this.stage.close();
     }
 
     public void setStage(Stage primaryStage){
         stage = primaryStage;
+    }
+
+    public void show(){
+        stage.show();
     }
 
 

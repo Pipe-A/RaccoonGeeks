@@ -7,8 +7,8 @@ public class Monitor extends Estudiante{
     public Monitor() {
     }
 
-    public Monitor(String usuarioEstud, String contrasennaEstud, String nombreEstud, String carreraEstud, String correoEstud, Long documentoEstud, Map<UUID, Curso> cursosMonitor) {
-        super(usuarioEstud, contrasennaEstud, nombreEstud, carreraEstud, correoEstud, documentoEstud);
+    public Monitor(String usuario, String contrasenna, String nombre, String correo, String carreraEstud, Long documentoEstud, TipoGeneral tipo, HashMap<String, Curso> listaCursosEstudiante, Map<UUID, Curso> cursosMonitor) {
+        super(usuario, contrasenna, nombre, correo, carreraEstud, documentoEstud, tipo, listaCursosEstudiante);
         CursosMonitor = cursosMonitor;
     }
 

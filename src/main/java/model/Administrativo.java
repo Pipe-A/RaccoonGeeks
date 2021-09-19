@@ -1,42 +1,23 @@
 package model;
 
-public class Administrativo {
-    private String usuarioAdmin;
-    private String contrasennaAdmin;
-    private String nombreAdmin;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+
+public class Administrativo extends Usuario {
+
     private String carreraAdmin;
     private String correoAdmin;
     private long cedulaAdmin;
     private TipoGeneral tipo;
 
-    public Administrativo(String usuarioAdmin, String contrasennaAdmin, String nombreAdmin, String carreraAdmin, String correoAdmin, long cedulaAdmin) {
-        this.usuarioAdmin = usuarioAdmin;
-        this.contrasennaAdmin = contrasennaAdmin;
-        this.nombreAdmin = nombreAdmin;
+    public Administrativo(String usuario, String contrasenna, String nombre, String correo, String carreraAdmin, String correoAdmin, long cedulaAdmin, TipoGeneral tipo) {
+        super(usuario, contrasenna, nombre, correo);
         this.carreraAdmin = carreraAdmin;
         this.correoAdmin = correoAdmin;
         this.cedulaAdmin = cedulaAdmin;
-        this.tipo = TipoGeneral.ADMINISTRATIVO;
+        this.tipo = tipo;
     }
 
-    public String getUsuarioAdmin() {
-        return usuarioAdmin;
-    }
-    public void setUsuarioAdmin(String usuarioAdmin) {
-        this.usuarioAdmin = usuarioAdmin;
-    }
-    public String getContrasennaAdmin() {
-        return contrasennaAdmin;
-    }
-    public void setContrasennaAdmin(String contrasennaAdmin) {
-        this.contrasennaAdmin = contrasennaAdmin;
-    }
-    public String getNombreAdmin() {
-        return nombreAdmin;
-    }
-    public void setNombreAdmin(String nombreAdmin) {
-        this.nombreAdmin = nombreAdmin;
-    }
     public String getCarreraAdmin() {
         return carreraAdmin;
     }

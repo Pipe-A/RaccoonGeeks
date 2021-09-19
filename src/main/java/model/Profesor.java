@@ -1,13 +1,11 @@
 package model;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.util.HashMap;
 
-public class Profesor {
-    private String usuarioProfe;
-    private String contrasennaProfe;
-    private String nombreProfe;
+public class Profesor extends Usuario {
     private String carreraProfe;
-    private String correoProfe;
     private Long cedulaProfe;
     private TipoProfesor tipoProfesor;
     private TipoGeneral tipo;
@@ -15,46 +13,16 @@ public class Profesor {
     private HashMap<String, Curso> listaCursosProfesor = new HashMap<>();
 
     public Profesor(String usuarioProfe, String contrasennaProfe, String nombreProfe, String carreraProfe, String correoProfe, Long cedulaProfe, TipoProfesor tipoProfesor) {
-        this.usuarioProfe = usuarioProfe;
-        this.contrasennaProfe = contrasennaProfe;
-        this.nombreProfe = nombreProfe;
         this.carreraProfe = carreraProfe;
-        this.correoProfe = correoProfe;
+        super.setCorreo(correoProfe);
+        super.setContrasenna(contrasennaProfe);
+        super.setNombre(nombreProfe);
+        super.setUsuario(usuarioProfe);
         this.cedulaProfe = cedulaProfe;
         this.tipoProfesor = tipoProfesor;
         this.tipo = TipoGeneral.PROFESOR;
     }
 
-    public String getUsuarioProfe() {
-        return usuarioProfe;
-    }
-    public void setUsuarioProfe(String usuarioProfe) {
-        this.usuarioProfe = usuarioProfe;
-    }
-    public String getContrasennaProfe() {
-        return contrasennaProfe;
-    }
-    public void setContrasennaProfe(String contrasennaProfe) {
-        this.contrasennaProfe = contrasennaProfe;
-    }
-    public String getNombreProfe() {
-        return nombreProfe;
-    }
-    public void setNombreProfe(String nombreProfe) {
-        this.nombreProfe = nombreProfe;
-    }
-    public String getCarreraProfe() {
-        return carreraProfe;
-    }
-    public void setCarreraProfe(String carreraProfe) {
-        this.carreraProfe = carreraProfe;
-    }
-    public String getCorreoProfe() {
-        return correoProfe;
-    }
-    public void setCorreoProfe(String correoProfe) {
-        this.correoProfe = correoProfe;
-    }
     public Long getCedulaProfe() {
         return cedulaProfe;
     }
@@ -78,13 +46,16 @@ public class Profesor {
 
     @Override
     public String toString() {
-        return "Profesor {" +
-                "NombreProfe: '" + nombreProfe + '\'' +
-                "Contraseña: '" + contrasennaProfe + '\'' +
-                "|| CarreraProfe: '" + carreraProfe + '\'' +
-                "|| CorreoProfe:'" + correoProfe + '\'' +
-                "|| TipoProfesor: " + tipoProfesor +
+        return "Profesor{" +
+                "nombreProfe='" + super.getNombre() + '\'' +
+                "CorreoProfe='" + super.getCorreo() + '\'' +
+                "UsuarioProfe='" + super.getUsuario() + '\'' +
+                "contraseñaProfe='" + super.getContrasenna() + '\'' +
+                "carreraProfe='" + carreraProfe + '\'' +
+                ", cedulaProfe=" + cedulaProfe +
+                ", tipoProfesor=" + tipoProfesor +
+                ", tipo=" + tipo +
+                ", listaCursosProfesor=" + listaCursosProfesor +
                 '}';
     }
-
 }
