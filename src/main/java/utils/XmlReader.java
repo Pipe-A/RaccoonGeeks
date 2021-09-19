@@ -94,7 +94,7 @@ public class XmlReader {
 
 
         } catch (SAXException | IOException | ParserConfigurationException | XPathExpressionException ex) {
-            Logger.getLogger(XPathReader.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(XPathReader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

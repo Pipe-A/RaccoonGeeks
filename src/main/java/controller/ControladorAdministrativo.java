@@ -23,14 +23,13 @@ public class ControladorAdministrativo {
     }
 
     public void insertarAdmin(Administrativo adminNuevo){
-        if (buscarAdministradores(adminNuevo.getUsuarioAdmin()) == null) {
-            this.listaAdministrador.put(adminNuevo.getUsuarioAdmin(), adminNuevo);
-            System.out.println("Profesor registrado con éxito!");
+        if (buscarAdministradores(adminNuevo.getUsuario()) == null) {
+            this.listaAdministrador.put(adminNuevo.getUsuario(), adminNuevo);
+            System.out.println("Administrador registrado con éxito!");
             System.out.println(adminNuevo.toString());
         }
         else{
             System.out.println("Ya existe un administrador con este nombre de Usuario, inténtelo nuevamente!");
-            //throw new ExcCliente("Ya existe un cliente con este número de cedula, inténtelo nuevamente!");
         }
     }
 
@@ -45,10 +44,10 @@ public class ControladorAdministrativo {
     }
 
     public void modificarAdminBasico(Administrativo admin, String nuevaContrasenna){
-        if (buscarAdministradores(admin.getUsuarioAdmin()) != null) {
+        if (buscarAdministradores(admin.getUsuario()) != null) {
             System.out.println("Administrador encontrado!");
             System.out.println(admin.toString());
-            admin.setContrasennaAdmin(nuevaContrasenna);
+            admin.setContrasenna(nuevaContrasenna);
             System.out.println("Los datos actualizados del administrador son: ");
             System.out.println(admin.toString());
         }
@@ -58,14 +57,13 @@ public class ControladorAdministrativo {
     }
 
     public void eliminarAdministrador(Administrativo admin){
-        if (buscarAdministradores(admin.getUsuarioAdmin()) != null) {
-            System.out.println("Profesor encontrado!");
+        if (buscarAdministradores(admin.getUsuario()) != null) {
+            System.out.println("Administrador encontrado!");
             System.out.println(admin.toString());
             // this.listaClientes.remove(this.listaClientes.indexOf(cliente));
             this.listaAdministrador.remove(admin.getCarreraAdmin());
             System.out.println("El administrador ha sido eliminado con exito! ");
-        }
-        else{
+        }else{
             System.out.println("El administrador no existe, intente nuevamente");
         }
     }

@@ -4,6 +4,7 @@ package utils;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
+import model.ReportesUsuarios;
 
 import java.io.File;
 import java.io.FileWriter;

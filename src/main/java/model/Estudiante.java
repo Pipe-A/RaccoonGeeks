@@ -1,61 +1,39 @@
 package model;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.util.HashMap;
 import java.util.Map;
-
-public class Estudiante {
-    private String usuarioEstud;
-    private String contrasennaEstud;
-    private String nombreEstud;
+@XmlRootElement
+public class Estudiante extends Usuario {
     private String carreraEstud;
-    private String correoEstud;
     private Long documentoEstud;
     private TipoGeneral tipo;
-
     private HashMap<String, Curso> listaCursosEstudiante = new HashMap<>();
 
     public Estudiante(){}
 
-    public Estudiante(String usuarioEstud, String contrasennaEstud, String nombreEstud, String carreraEstud, String correoEstud, Long documentoEstud) {
-        this.usuarioEstud = usuarioEstud;
-        this.contrasennaEstud = contrasennaEstud;
-        this.nombreEstud = nombreEstud;
-        this.carreraEstud = carreraEstud;
-        this.correoEstud = correoEstud;
-        this.documentoEstud = documentoEstud;
-        this.tipo = TipoGeneral.ESTUDIANTE;
+    public Estudiante(String usuario, String contrasenna, String nombre, String correo) {
+        super(usuario, contrasenna, nombre, correo);
     }
 
-    public String getUsuarioEstud() {
-        return usuarioEstud;
+    public Estudiante(String usuario, String contrasenna, String nombre, String correo, String carreraEstud, Long documentoEstud, TipoGeneral tipo, HashMap<String, Curso> listaCursosEstudiante) {
+        super(usuario, contrasenna, nombre, correo);
+        this.carreraEstud = carreraEstud;
+        this.documentoEstud = documentoEstud;
+        this.tipo = tipo;
+        this.listaCursosEstudiante = listaCursosEstudiante;
     }
-    public void setUsuarioEstud(String usuarioEstud) {
-        this.usuarioEstud = usuarioEstud;
-    }
-    public String getContrasennaEstud() {
-        return contrasennaEstud;
-    }
-    public void setContrasennaEstud(String contrasennaEstud) {
-        this.contrasennaEstud = contrasennaEstud;
-    }
-    public String getNombreEstud() {
-        return nombreEstud;
-    }
-    public void setNombreEstud(String nombreEstud) {
-        this.nombreEstud = nombreEstud;
-    }
+
     public String getCarreraEstud() {
         return carreraEstud;
     }
+
     public void setCarreraEstud(String carreraEstud) {
         this.carreraEstud = carreraEstud;
     }
-    public String getCorreoEstud() {
-        return correoEstud;
-    }
-    public void setCorreoEstud(String correoEstud) {
-        this.correoEstud = correoEstud;
-    }
+
     public Long getDocumentoEstud() {
         return documentoEstud;
     }
@@ -72,9 +50,9 @@ public class Estudiante {
     @Override
     public String toString() {
         return "Estudiante {" +
-                "|| Nombre Estudiante: '" + nombreEstud + '\'' +
+                "|| Nombre Estudiante: '" + super.getNombre() + '\'' +
                 "|| Carrera Estudiante:'" + carreraEstud + '\'' +
-                "|| Correo Estudiante:'" + correoEstud + '\'' +
+                "|| Correo Estudiante:'" + super.getCorreo() + '\'' +
                 '}';
     }
 }
