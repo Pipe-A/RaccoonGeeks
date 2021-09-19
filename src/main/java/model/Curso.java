@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Curso {
     private UUID idCurso;
+    private String monitor;
     private String nombreCurso;
     private Map < String, Profesor> profesoresCurso=new HashMap<>();
     private Map < String, Estudiante> estudiantesCurso=new HashMap<>();
