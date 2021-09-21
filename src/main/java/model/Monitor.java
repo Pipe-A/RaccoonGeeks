@@ -1,7 +1,8 @@
+/*
 package model;
 import java.util.*;
 
-public class Monitor extends Estudiante{
+public class Monitor extends Estudiante {
     private Map <UUID, Curso> CursosMonitor=new HashMap<>();
 
     public Monitor() {
@@ -20,3 +21,4 @@ public class Monitor extends Estudiante{
         CursosMonitor = cursosMonitor;
     }
 }
+*/

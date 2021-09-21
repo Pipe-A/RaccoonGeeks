@@ -1,29 +1,22 @@
 package model;
 
-import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.util.HashMap;
-import java.util.Map;
+
 @XmlRootElement
 public class Estudiante extends Usuario {
     private String carreraEstud;
     private Long documentoEstud;
     private TipoGeneral tipo;
-    private HashMap<String, Curso> listaCursosEstudiante = new HashMap<>();
+    private HashMap<String, Curso> cursosPertenecenAEstudiante = new HashMap<>();
 
-    public Estudiante(){}
-
-    public Estudiante(String usuario, String contrasenna, String nombre, String correo) {
-        super(usuario, contrasenna, nombre, correo);
-    }
-
-    public Estudiante(String usuario, String contrasenna, String nombre, String correo, String carreraEstud, Long documentoEstud, TipoGeneral tipo, HashMap<String, Curso> listaCursosEstudiante) {
+    public Estudiante(String usuario, String contrasenna, String nombre, String correo, String carreraEstud, Long documentoEstud, TipoGeneral tipo, HashMap<String, Curso> listaCursosProfesor) {
         super(usuario, contrasenna, nombre, correo);
         this.carreraEstud = carreraEstud;
         this.documentoEstud = documentoEstud;
         this.tipo = tipo;
-        this.listaCursosEstudiante = listaCursosEstudiante;
+        this.cursosPertenecenAEstudiante = listaCursosProfesor;
     }
 
     public String getCarreraEstud() {
@@ -40,11 +33,11 @@ public class Estudiante extends Usuario {
     public void setDocumentoEstud(Long documentoEstud) {
         this.documentoEstud = documentoEstud;
     }
-    public HashMap<String, Curso> getListaCursosEstudiante() {
-        return listaCursosEstudiante;
+    public HashMap<String, Curso> getCursosPertenecenAEstudiante() {
+        return cursosPertenecenAEstudiante;
     }
-    public void setListaCursosEstudiante(HashMap<String, Curso> listaCursosEstudiante) {
-        this.listaCursosEstudiante = listaCursosEstudiante;
+    public void setCursosPertenecenAEstudiante(HashMap<String, Curso> cursosPertenecenAEstudiante) {
+        this.cursosPertenecenAEstudiante = cursosPertenecenAEstudiante;
     }
 
     @Override
