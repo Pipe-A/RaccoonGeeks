@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="451.0" style="-fx-background-color: E4F8FA; -fx-border-color: 000000; -fx-border-image-width: 10000;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.PantallaPrincipalAdminController">
+   <children>
+      <AnchorPane layoutY="80.0" prefHeight="383.0" prefWidth="451.0" style="-fx-background-color: E4E5FA;">
+         <children>
+            <Button fx:id="btnGestionarProfe" layoutX="42.0" layoutY="21.0" mnemonicParsing="false" onAction="#gestionarProfe" prefHeight="151.0" prefWidth="163.0" style="-fx-background-color: A5D7CF; -fx-background-radius: 25;" text="Gestión Profesores" />
+            <Button fx:id="btnGestionarCurso" layoutX="241.0" layoutY="21.0" mnemonicParsing="false" onAction="#gestionCurso" prefHeight="151.0" prefWidth="163.0" style="-fx-background-radius: 25; -fx-background-color: AAD7A5;" text="Gestión Cursos" />
+            <Button fx:id="btnGestionarAdmin" layoutX="42.0" layoutY="203.0" mnemonicParsing="false" onAction="#gestionarAdmin" prefHeight="151.0" prefWidth="163.0" style="-fx-background-radius: 25; -fx-background-color: AAD7A5;" text="&quot;Gestión Administradores&quot;" />
+            <Button fx:id="btnGestionarEst" layoutX="241.0" layoutY="203.0" mnemonicParsing="false" onAction="#gestionarEst" prefHeight="151.0" prefWidth="163.0" style="-fx-background-radius: 25; -fx-background-color: A5D7CF;" text="Gestión estudiantes" />
+         </children>
+      </AnchorPane>
+      <Separator layoutX="29.0" layoutY="271.0" prefHeight="0.0" prefWidth="382.0" />
+      <Separator layoutX="223.0" layoutY="94.0" orientation="VERTICAL" prefHeight="348.0" prefWidth="2.0" />
+      <Label layoutX="57.0" prefHeight="83.0" prefWidth="333.0" text="ADMINISTRADOR" textAlignment="CENTER">
+         <font>
+            <Font size="42.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

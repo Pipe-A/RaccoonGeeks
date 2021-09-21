@@ -2,9 +2,14 @@ package com.example.demo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class PantallaEstudianteController {
 
@@ -76,8 +81,21 @@ public class PantallaEstudianteController {
 
     }
 
-    public void init(String text, Stage stage, InicioSesionAppController inicioSesionAppController) {
+    /*public void init(String text, Stage stage, InicioSesionAppController inicioSesionAppController) {
         this.inicioSesionAppController = inicioSesionAppController;
         this.stage = stage;
+    }*/
+
+    public void closeWindows() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PantallaInicio.fxml"));
+        Parent root = loader.load();
+        InicioSesionAppController controlPantPrincController = loader.getController();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        Stage myStage = (Stage) this.btn_CerrarSesionEstudiante.getScene().getWindow();
+        myStage.close();
     }
+
 }

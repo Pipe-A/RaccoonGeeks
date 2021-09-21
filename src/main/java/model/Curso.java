@@ -5,33 +5,41 @@ import java.util.*;
 public class Curso {
     private UUID idCurso;
     private String nombreCurso;
-    private Map < String, Profesor> profesoresCurso=new HashMap<>();
-    private Map < String, Estudiante> estudiantesCurso=new HashMap<>();
-    private Map < String, Monitor> listaMonitores = new HashMap<>();
+    private Map <String, Profesor> profesoresPertenecenCurso =new HashMap<>();
+    private Map <String, Estudiante> estudiantesPertenecenCurso =new HashMap<>();
 
-    public void setProfesoresCurso(Map newProfesoresCurso){
-        this.profesoresCurso=newProfesoresCurso;
+    public Curso(String nombreCurso, Map<String, Profesor> profesoresCurso, Map<String, Estudiante> estudiantesCurso){
+        this.idCurso = UUID.randomUUID();
+        this.nombreCurso = nombreCurso;
+        this.profesoresPertenecenCurso = profesoresCurso;
+        this.estudiantesPertenecenCurso = estudiantesCurso;
     }
 
-    public Map getProfesoresCurso(){
-        return this.profesoresCurso;
+    //private Map <String, Monitor> listaMonitores = new HashMap<>();
+
+    public void setProfesoresPertenecenCurso(Map newProfesoresCurso){
+        this.profesoresPertenecenCurso =newProfesoresCurso;
     }
 
-    public void setEstudiantesCurso(Map newEstudiantesCurso){
-        this.estudiantesCurso=newEstudiantesCurso;
+    public Map getProfesoresPertenecenCurso(){
+        return this.profesoresPertenecenCurso;
     }
 
-    public Map getEstudiantesCurso(){
-        return this.estudiantesCurso;
+    public void setEstudiantesPertenecenCurso(Map newEstudiantesCurso){
+        this.estudiantesPertenecenCurso =newEstudiantesCurso;
     }
 
-    public Map<String, Monitor> getListaMonitores() {
+    public Map getEstudiantesPertenecenCurso(){
+        return this.estudiantesPertenecenCurso;
+    }
+
+    /*public Map<String, Monitor> getListaMonitores() {
         return listaMonitores;
     }
 
     public void setListaMonitores(Map<String, Monitor> listaMonitores) {
         this.listaMonitores = listaMonitores;
-    }
+    }*/
 
     public void setIdCurso(UUID newIdCurso){
         this.idCurso=newIdCurso;
@@ -47,6 +55,15 @@ public class Curso {
 
     public String getNombreCurso(){
         return this.nombreCurso;
+    }
+
+    @Override
+    public String toString() {
+        return "Curso {" +
+                "|| Nombre Curso: '" + this.getNombreCurso() + '\'' +
+                "|| Estudiantes curso:'" + this.getEstudiantesPertenecenCurso() + '\'' +
+                "|| Profesores curso:'" + this.getProfesoresPertenecenCurso() + '\'' +
+                '}';
     }
 
 

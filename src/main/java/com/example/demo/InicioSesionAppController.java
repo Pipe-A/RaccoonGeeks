@@ -1,6 +1,9 @@
 package com.example.demo;
 
+import controller.ControlCursos;
+import controller.ControladorEstudiante;
 import controller.ControladorGeneral;
+import controller.ControladorProfesor;
 import jakarta.xml.bind.JAXBException;
 import java.beans.XMLEncoder;
 import javafx.fxml.FXML;
@@ -12,9 +15,7 @@ import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.Estudiante;
-import model.TipoGeneral;
-import model.Usuario;
+import model.*;
 import utils.AlertUtils;
 
 
@@ -41,8 +42,30 @@ public class InicioSesionAppController {
 
     @FXML
     void generarArchivo(ActionEvent event) {
-        Usuario usr1= new Estudiante("Pepe","pepe1","Pepitp","pepa","Sistemas",123124L, TipoGeneral.ESTUDIANTE,null );
-        controladorGeneral.guardarUsuario(usr1);
+
+        Usuario admin = new Administrativo("Mau","mau1","Mauren","mauriv","Sistemas",12345L,TipoGeneral.ADMINISTRATIVO);
+        controladorGeneral.guardarUsuario(admin);
+
+        Usuario profeNuevo = new Profesor("prof1", "profe", "Juanito", "loquesea@puj","sistemas",12345678L,TipoProfesor.DE_PLANTA, TipoGeneral.PROFESOR,null);
+        controladorGeneral.getControlProfe().insertarProfesor((Profesor) profeNuevo);
+        controladorGeneral.guardarUsuario(profeNuevo);
+
+        Usuario estNuevo = new Estudiante("est1","estu","Pedro","arquitect","est@122",98765L, TipoGeneral.ESTUDIANTE,null);
+        controladorGeneral.getControlEstu().insertarEstudiante((Estudiante) estNuevo);
+        controladorGeneral.guardarUsuario(estNuevo);
+
+        Curso cursos = new Curso("Fundamentos",null,null);
+        controladorGeneral.getControlCursos().insertarCurso(cursos);
+
+        ControladorGeneral controlTotal = new ControladorGeneral();
+        controlTotal.asignarEstudiante(cursos,(Estudiante) estNuevo);
+        controlTotal.asingarProfesor(cursos,(Profesor) profeNuevo);
+
+        System.out.println("**************DESPUÉS DE CREAR EL CURSO**************");
+
+        controladorGeneral.getControlProfe().consultarProfesores();
+        controladorGeneral.getControlCursos().consultarCurso();
+        controladorGeneral.getControlEstu().consultarEstudiantes();
 
 /*
         controladorGeneral.getReportesUsuarios().setUsuarios(controladorGeneral.getUsuarios());
@@ -76,18 +99,55 @@ public class InicioSesionAppController {
     }
 
     @FXML
-    void iniciarSesion(ActionEvent event){
+    void iniciarSesion(ActionEvent event) throws IOException{
         String usuario = fieldUsuario.getText();
         String contraseña = fieldContraseña.getText();
+        FXMLLoader loader;
+        Parent root;
+        Scene scene;
+        Stage stage;
+        Stage myStage;
         try {
             int tipoUsuario = controladorGeneral.comprobarTipoUsuario(usuario, contraseña);
             switch (tipoUsuario) {
                 case 1:
-                    mostrarPantallaEstudiante();
+                    //mostrarPantallaEstudiante();
+                    loader = new FXMLLoader(getClass().getResource("PantallaEstudiantes.fxml"));
+                    root = loader.load();
+                    PantallaEstudianteController pntEstudianteController = loader.getController();
+                    scene = new Scene(root);
+                    stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+                    stage.setOnCloseRequest(e-> {
+                        try {
+                            pntEstudianteController.closeWindows();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+                    myStage = (Stage) this.ButtonIniciarSesion.getScene().getWindow();
+                    myStage.close();
                     break;
                 case 2:
                     break;
                 case 3:
+                    loader = new FXMLLoader(getClass().getResource("PantallaPrincipalAdmin.fxml"));
+                    root = loader.load();
+                    PantallaPrincipalAdminController controlPantallaPrincipalController = loader.getController();
+                    scene = new Scene(root);
+                    stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+                    stage.setOnCloseRequest(e-> {
+                        try {
+                            controlPantallaPrincipalController.closeWindows();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+                    myStage = (Stage) this.ButtonIniciarSesion.getScene().getWindow();
+                    myStage.close();
                     break;
                 case 4:
                     AlertUtils.alertError("Error al Iniciar Sesión", "Iniciar Sesión", "El nombre de usuario o contraseña son incorrectos, revíselos y vuelva a intentarlo");
@@ -100,7 +160,29 @@ public class InicioSesionAppController {
         }
     }
 
-    public void mostrarPantallaEstudiante() throws IOException {
+    /*@FXML
+    void iniciarSesion(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PantallaPrincipalAdmin.fxml"));
+        Parent root = loader.load();
+        PantallaPrincipalAdminController controlPantPrincController = loader.getController();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        stage.setOnCloseRequest(e-> {
+            try {
+                controlPantPrincController.closeWindows();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        Stage myStage = (Stage) this.ButtonIniciarSesion.getScene().getWindow();
+        myStage.close();
+
+    }*/
+
+    /*public void mostrarPantallaEstudiante() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/com.example.demo/PantallaEstudiantes.fxml"));
         Parent root = loader.load();
         PantallaEstudianteController controller = loader.getController();
@@ -118,7 +200,7 @@ public class InicioSesionAppController {
 
     public void show(){
         stage.show();
-    }
+    }*/
 
 
 

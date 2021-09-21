@@ -1,12 +1,18 @@
 package com.example.demo;
 
+import controller.ControlCursos;
+import controller.ControladorEstudiante;
+import controller.ControladorGeneral;
+import controller.ControladorProfesor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.*;
 
 import java.io.IOException;
+import java.security.spec.ECParameterSpec;
 
 public class InicioSesionApp extends Application {
     @Override
@@ -27,20 +33,7 @@ public class InicioSesionApp extends Application {
     }
 
     public static void main(String[] args) {
-        /*ControladorProfesor controlProfe = new ControladorProfesor();
-        Profesor profeNuevo = new Profesor("prof1", "profe", "Juanito", "sistemas", "loquesea@puj", 12345L, TipoProfesor.DE_PLANTA);
-        System.out.println("Registro: ");
-        controlProfe.insertarProfesor(profeNuevo);
-        System.out.println("Consulta 1: ");
-        controlProfe.consultarProfesores();
-        System.out.println("Modificar: ");
-        controlProfe.modificarProfesoresBasico(profeNuevo, "profesor");
-        System.out.println("Consulta 2: ");
-        controlProfe.consultarProfesores();
-        System.out.println("Eliminar: ");
-        controlProfe.eliminarProfesor(profeNuevo);
-        System.out.println("Consulta 3: ");
-        controlProfe.consultarProfesores();*/
+
         launch(args);
     }
 }
