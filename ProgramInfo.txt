@@ -1,6 +1,6 @@
 <Curso>
 4f2b49fc-c3a1-4abe-89c5-55135f479682
-POO
+Prog Orient Obj
 <MonitoresCurso>
 Pipe
 angelita123
@@ -16,7 +16,7 @@ Mau123
 angelita123
 angelita@puj
 angela456
-angela
+angela Opsina
 sistema
 123456
 <CursosMonitorEstudiante>
@@ -30,7 +30,7 @@ sistema
 sebs123
 sebs@puj
 sebs456
-sebastian
+sebastian Martinez
 sistemas
 12345678
 <CursosEstudiante>
@@ -41,7 +41,7 @@ sistemas
 Mau123
 Mau@puj
 Mau456
-Mauren
+Mauren Rivera
 123456887
 <CursosProfesor>
 4f2b49fc-c3a1-4abe-89c5-55135f479682
@@ -51,7 +51,7 @@ Mauren
 Willy123
 Willy@puj
 Willy456
-William
+William Martinez
 123123345
 </Administrativo>
 <Estudiante>
@@ -69,7 +69,7 @@ Industrial
 pipe
 pipe@puj
 pipe15543
-JuanFelipe
+Juan Felipe
 sistemas
 1272451
 <CursosMonitorEstudiante>
