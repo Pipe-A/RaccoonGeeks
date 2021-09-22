@@ -7,6 +7,7 @@ public class Curso {
     private String nombreCurso;
     private Map <String, Profesor> profesoresPertenecenCurso =new HashMap<>();
     private Map <String, Estudiante> estudiantesPertenecenCurso =new HashMap<>();
+    private Map <String,Monitor> monitoresCurso=new HashMap<>();
 
     public Curso(String nombreCurso, Map<String, Profesor> profesoresCurso, Map<String, Estudiante> estudiantesCurso){
         this.idCurso = UUID.randomUUID();
@@ -15,13 +16,19 @@ public class Curso {
         this.estudiantesPertenecenCurso = estudiantesCurso;
     }
 
-    //private Map <String, Monitor> listaMonitores = new HashMap<>();
+    public Map<String, Monitor> getMonitoresCurso() {
+        return monitoresCurso;
+    }
+
+    public void setMonitoresCurso(Map<String, Monitor> monitoresCurso) {
+        this.monitoresCurso = monitoresCurso;
+    }
 
     public void setProfesoresPertenecenCurso(Map newProfesoresCurso){
         this.profesoresPertenecenCurso =newProfesoresCurso;
     }
 
-    public Map getProfesoresPertenecenCurso(){
+    public Map<String,Profesor> getProfesoresPertenecenCurso(){
         return this.profesoresPertenecenCurso;
     }
 
@@ -29,8 +36,8 @@ public class Curso {
         this.estudiantesPertenecenCurso =newEstudiantesCurso;
     }
 
-    public Map getEstudiantesPertenecenCurso(){
-        return this.estudiantesPertenecenCurso;
+    public Map<String,Estudiante> getEstudiantesPertenecenCurso(){
+        return estudiantesPertenecenCurso;
     }
 
     /*public Map<String, Monitor> getListaMonitores() {

@@ -1,4 +1,4 @@
-module com.example.demo {
+module view {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -7,6 +7,8 @@ module com.example.demo {
     requires java.logging;
     requires java.desktop;
 
-    opens com.example.demo to javafx.fxml;
-    exports com.example.demo;
+    exports view;
+    opens view to javafx.fxml;
+    exports model.reportes;
+    opens model.reportes to com.sun.xml.bind;
 }

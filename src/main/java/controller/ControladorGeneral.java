@@ -1,6 +1,8 @@
 package controller;
 
 import model.*;
+import model.reportes.ReportesEstudiantes;
+import model.reportes.ReportesUsuarios;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,39 +11,41 @@ public class ControladorGeneral {
 
     private Map<String, Usuario> usuarios = new HashMap<>();
     private ReportesUsuarios reportesUsuarios = new ReportesUsuarios();
+    private ReportesEstudiantes reportesEstudiantes=new ReportesEstudiantes();
     ControladorProfesor controlProfe = new ControladorProfesor();
     private Map<String, Administrativo> listaAdministrador = new HashMap<>();
-    public Map<String, Administrativo> getListaAdministrador() {
-        return listaAdministrador;
+    ControladorEstudiante controlEstu = new ControladorEstudiante();
+    ControlCursos controlCursos = new ControlCursos();
+
+    public ReportesEstudiantes getReportesEstudiantes() {
+        return reportesEstudiantes;
+    }
+
+    public void setReportesEstudiantes(ReportesEstudiantes reportesEstudiantes) {
+        this.reportesEstudiantes = reportesEstudiantes;
     }
 
     public ControlCursos getControlCursos() {
         return controlCursos;
     }
-
+    public Map<String, Administrativo> getListaAdministrador() {
+        return listaAdministrador;
+    }
     public void setControlCursos(ControlCursos controlCursos) {
         this.controlCursos = controlCursos;
     }
-
-    ControlCursos controlCursos = new ControlCursos();
-    ControladorEstudiante controlEstu = new ControladorEstudiante();
-
     public ControladorProfesor getControlProfe() {
         return controlProfe;
     }
-
     public ControladorEstudiante getControlEstu() {
         return controlEstu;
     }
-
     public Map<String, Usuario> getUsuarios() {
         return usuarios;
     }
-
     public ReportesUsuarios getReportesUsuarios() {
         return reportesUsuarios;
     }
-
     public void setReportesUsuarios(ReportesUsuarios reportesUsuarios) {
         this.reportesUsuarios = reportesUsuarios;
     }
@@ -163,16 +167,49 @@ public class ControladorGeneral {
         if(profEncontrado!=null && cursoEncontrado!=null){
             if(!cursoEncontrado.getEstudiantesPertenecenCurso().containsValue(profesor)){
                 cursoEncontrado.getProfesoresPertenecenCurso().put(profesor.getUsuario(), profesor);
-                profEncontrado.getCursosPertenecenAProfesor().put(curso.getIdCurso().toString(), curso);
+                profEncontrado.getCursosPertenecenAProfesor().put(curso.getIdCurso(), curso);
             }
         }
-        return;
     }
 
-    public void asignarMonitor(Profesor monitor){
+    public void crearMonitorAPartirDeEstudiante(Estudiante estudiante){
+        if(estudiante!= null){
+            Monitor monitor= new Monitor(estudiante.getUsuario(),estudiante.getContrasenna(),estudiante.getNombre(),estudiante.getCorreo(), estudiante.getCarreraEstud(),estudiante.getDocumentoEstud(),TipoGeneral.ESTUDIANTE, estudiante.getCursosPertenecenAEstudiante());
+            for(Curso curso: estudiante.getCursosPertenecenAEstudiante().values()){
+                curso.getEstudiantesPertenecenCurso().replace(estudiante.getUsuario(),estudiante,monitor);
+            }
+            this.usuarios.replace(estudiante.getUsuario(),estudiante,monitor);
+            this.controlEstu.getListaMonitores().put(monitor.getUsuario(),monitor);
+        }else{
+            System.out.println("ERROR: El estudiante es Nulo");
+        }
+    }
+
+    public void asignarMonitor(Monitor monitor, Curso curso) {
+        if(monitor!=null&&curso!=null){
+            if(!curso.getEstudiantesPertenecenCurso().containsKey(monitor.getUsuario())){
+                curso.getMonitoresCurso().put(monitor.getUsuario(),monitor);
+            }
+            else{
+                System.out.println("ERROR: El monitor es estudiante del curso al que se quiere asignar");
+            }
+        }else{
+            System.out.println("ERROR: El monitor o el curso son nulos");
+        }
         //si el estudiante existe, darle el poder del profesor:v y asignar (put) al curso
     }
 
+    public void removerRolDeMonitorAUnEstudiante(Monitor monitor){
+        Estudiante estudiante=new Estudiante(monitor.getUsuario(),monitor.getContrasenna(), monitor.getNombre(), monitor.getCorreo(), monitor.getCarreraEstud(), monitor.getDocumentoEstud(),TipoGeneral.ESTUDIANTE, monitor.getCursosPertenecenAEstudiante());
+        for(Curso curso: monitor.getCursosMonitor().values()){
+            curso.getMonitoresCurso().remove(monitor);
+        }
+        for(Curso curso: monitor.getCursosPertenecenAEstudiante().values()){
+            curso.getEstudiantesPertenecenCurso().replace(monitor.getUsuario(),monitor,estudiante);
+        }
+        this.usuarios.replace(estudiante.getUsuario(),monitor,estudiante);
+        this.controlEstu.getListaMonitores().remove(monitor);
+    }
     public void cargarCredenciales(){
 
     }
