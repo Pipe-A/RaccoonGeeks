@@ -1,6 +1,13 @@
 package model;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlSeeAlso;
 
+@XmlSeeAlso({Estudiante.class,Profesor.class,Administrativo.class})
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Usuario {
     private String usuario;
     private String contrasenna;

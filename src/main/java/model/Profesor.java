@@ -1,16 +1,27 @@
 package model;
 
-import java.util.HashMap;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Profesor extends Usuario {
 
     private String carreraProfe;
     private Long cedulaProfe;
     private TipoProfesor tipoProfesor;
     private TipoGeneral tipo;
-    private HashMap<String, Curso> cursosPertenecenAProfesor = new HashMap<>();
+    private Map<UUID, Curso> cursosPertenecenAProfesor = new HashMap<>();
 
-    public Profesor(String usuario, String contrasenna, String nombre, String correo, String carreraProfe, Long cedulaProfe, TipoProfesor tipoProfesor, TipoGeneral tipo, HashMap<String, Curso> listaCursosProfesor) {
+    public Profesor() {
+    }
+
+    public Profesor(String usuario, String contrasenna, String nombre, String correo, String carreraProfe, Long cedulaProfe, TipoProfesor tipoProfesor, TipoGeneral tipo, Map<UUID, Curso> listaCursosProfesor) {
         super(usuario, contrasenna, nombre, correo);
         this.carreraProfe = carreraProfe;
         this.cedulaProfe = cedulaProfe;
@@ -33,10 +44,10 @@ public class Profesor extends Usuario {
     }
     public TipoGeneral getTipo() { return tipo; }
     public void setTipo(TipoGeneral tipo) { this.tipo = tipo; }
-    public HashMap<String, Curso> getCursosPertenecenAProfesor() {
+    public Map<UUID, Curso> getCursosPertenecenAProfesor() {
         return cursosPertenecenAProfesor;
     }
-    public void setCursosPertenecenAProfesor(HashMap<String, Curso> cursosPertenecenAProfesor) {
+    public void setCursosPertenecenAProfesor(Map<UUID, Curso> cursosPertenecenAProfesor) {
         this.cursosPertenecenAProfesor = cursosPertenecenAProfesor;
     }
 

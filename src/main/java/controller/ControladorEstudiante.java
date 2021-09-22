@@ -2,12 +2,23 @@ package controller;
 
 import model.Administrativo;
 import model.Estudiante;
+import model.Monitor;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ControladorEstudiante {
     private Map<String, Estudiante> listaEstudiantes = new HashMap<>();
+    private Map<String, Monitor> listaMonitores=new HashMap<>();
+
+    public Map<String, Monitor> getListaMonitores() {
+        return listaMonitores;
+    }
+
+    public void setListaMonitores(Map<String, Monitor> listaMonitores) {
+        this.listaMonitores = listaMonitores;
+    }
+
     public Map<String, Estudiante> getListaEstudiantes() {
         return listaEstudiantes;
     }
