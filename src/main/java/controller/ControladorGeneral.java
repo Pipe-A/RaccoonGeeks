@@ -13,9 +13,6 @@ public class ControladorGeneral {
     private Map<String, Administrativo> listaAdministrador = new HashMap<>();
     ControladorEstudiante controlEstu = new ControladorEstudiante();
     ControlCursos controlCursos = new ControlCursos();
-
-
-
     public ControlCursos getControlCursos() {
         return controlCursos;
     }

@@ -522,11 +522,11 @@ public class InicioSesionAppController {
                 }
             }
         }
-
     }
 
     @FXML
     void iniciarSesion(ActionEvent event) throws IOException{
+        llenarInfo();
         String usuario = fieldUsuario.getText();
         String contrasenna = fieldContraseña.getText();
         try {
