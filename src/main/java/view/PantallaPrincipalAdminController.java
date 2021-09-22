@@ -29,8 +29,23 @@ public class PantallaPrincipalAdminController {
 
 
     @FXML
-    void gestionCurso(ActionEvent event) {
-
+    void gestionCurso(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PantallaAdminGestionCurso.fxml"));
+        Parent root = loader.load();
+        PantallaAdminGestionCursoController pantallaAdminGestionCursoController = loader.getController();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        stage.setOnCloseRequest(e-> {
+            try {
+                pantallaAdminGestionCursoController.regresarMenuAdmin(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        Stage myStage = (Stage) this.btnGestionarCurso.getScene().getWindow();
+        myStage.close();
     }
 
     @FXML

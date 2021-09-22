@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.security.spec.ECParameterSpec;
 
 public class InicioSesionApp extends Application {
+
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -33,8 +34,6 @@ public class InicioSesionApp extends Application {
     }
 
     public static void main(String[] args) {
-        InicioSesionAppController inicio=new InicioSesionAppController();
-        inicio.llenarInfo();
         launch(args);
     }
 }
