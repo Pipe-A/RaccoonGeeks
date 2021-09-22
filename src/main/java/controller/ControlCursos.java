@@ -9,9 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ControlCursos {
-    /* private Map <String, Profesor> profesoresCurso=new HashMap<>();
-     private Map <String, Estudiante> estudiantesCurso=new HashMap<>();
-     private Map <String, Monitor> listaMonitores = new HashMap<>();*/
+
     private Map<UUID, Curso> listaCursos = new HashMap<>();
 
     public Map<UUID, Curso> getListaCursos() {
@@ -20,13 +18,6 @@ public class ControlCursos {
     public void setListaCursos(Map<UUID, Curso> listaCursos) {
         this.listaCursos = listaCursos;
     }
-/*
-    public Map<String, Profesor> getProfesoresCurso() {return profesoresCurso;}
-    public void setProfesoresCurso(Map<String, Profesor> profesoresCurso) {this.profesoresCurso = profesoresCurso;}
-    public Map<String, Estudiante> getEstudiantesCurso() {return estudiantesCurso;}
-    public void setEstudiantesCurso(Map<String, Estudiante> estudiantesCurso) {this.estudiantesCurso = estudiantesCurso;}
-    public Map<String, Monitor> getListaMonitores() {return listaMonitores;}
-    public void setListaMonitores(Map<String, Monitor> listaMonitores) {this.listaMonitores = listaMonitores;}*/
 
     public Curso buscarCurso(UUID id){
         if(this.listaCursos.containsKey(id)){

@@ -269,7 +269,7 @@ public class InicioSesionAppController {
                     cur.setUsuario(in.next());
                     cur.setCorreo(in.next());
                     cur.setContrasenna(in.next());
-                    cur.setNombre(in.next());
+                    cur.setNombre(in.nextLine());
                     cur.setCedulaAdmin(in.nextLong());
 
                     if(in.next().equals("</Administrativo>")){
@@ -284,7 +284,7 @@ public class InicioSesionAppController {
                     MonitoresDelCurso.add(mapMonitores);
                     Curso cur=new Curso();
                     cur.setIdCurso(UUID.fromString(in.next()));
-                    cur.setNombreCurso(in.next());
+                    cur.setNombreCurso(in.nextLine());
                     Map<String, Monitor>monitorMap=new HashMap<>();
                     cur.setMonitoresCurso(monitorMap);
                     if(in.next().equals("<MonitoresCurso>")){
@@ -336,8 +336,8 @@ public class InicioSesionAppController {
                     Monitor cur = new Monitor();
                     cur.setUsuario(in.next());
                     cur.setCorreo(in.next());
-                    cur.setContrasenna(in.next());
-                    cur.setNombre(in.next());
+                    cur.setContrasenna(in.nextLine());
+                    cur.setNombre(in.nextLine());
                     cur.setCarreraEstud(in.next());
                     cur.setDocumentoEstud(in.nextLong());
                     Map<String,ArrayList<UUID>> mapCursosEstudiante=new HashMap<>() ;
@@ -384,8 +384,8 @@ public class InicioSesionAppController {
                     Estudiante cur=new Estudiante();
                     cur.setUsuario(in.next());
                     cur.setCorreo(in.next());
-                    cur.setContrasenna(in.next());
-                    cur.setNombre(in.next());
+                    cur.setContrasenna(in.nextLine());
+                    cur.setNombre(in.nextLine());
                     cur.setCarreraEstud(in.next());
                     cur.setDocumentoEstud(in.nextLong());
                     Map<UUID,Curso> cursoMap=new HashMap<>();
@@ -417,8 +417,8 @@ public class InicioSesionAppController {
                     Profesor cur=new Profesor();
                     cur.setUsuario(in.next());
                     cur.setCorreo(in.next());
-                    cur.setContrasenna(in.next());
-                    cur.setNombre(in.next());
+                    cur.setContrasenna(in.nextLine());
+                    cur.setNombre(in.nextLine());
                     cur.setCedulaProfe(in.nextLong());
 
                     Map<UUID,Curso>cursoMap= new HashMap<>();
