@@ -1,8 +1,6 @@
 package controller;
 
 import model.*;
-import model.reportes.ReportesEstudiantes;
-import model.reportes.ReportesUsuarios;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,20 +9,12 @@ import java.util.UUID;
 public class ControladorGeneral {
 
     private Map<String, Usuario> usuarios = new HashMap<>();
-    private ReportesUsuarios reportesUsuarios = new ReportesUsuarios();
-    private ReportesEstudiantes reportesEstudiantes=new ReportesEstudiantes();
     ControladorProfesor controlProfe = new ControladorProfesor();
     private Map<String, Administrativo> listaAdministrador = new HashMap<>();
     ControladorEstudiante controlEstu = new ControladorEstudiante();
     ControlCursos controlCursos = new ControlCursos();
 
-    public ReportesEstudiantes getReportesEstudiantes() {
-        return reportesEstudiantes;
-    }
 
-    public void setReportesEstudiantes(ReportesEstudiantes reportesEstudiantes) {
-        this.reportesEstudiantes = reportesEstudiantes;
-    }
 
     public ControlCursos getControlCursos() {
         return controlCursos;
@@ -43,12 +33,6 @@ public class ControladorGeneral {
     }
     public Map<String, Usuario> getUsuarios() {
         return usuarios;
-    }
-    public ReportesUsuarios getReportesUsuarios() {
-        return reportesUsuarios;
-    }
-    public void setReportesUsuarios(ReportesUsuarios reportesUsuarios) {
-        this.reportesUsuarios = reportesUsuarios;
     }
 
     public int comprobarTipoUsuario(String usuario, String contrasenna) {
@@ -275,12 +259,5 @@ public class ControladorGeneral {
         }
         this.usuarios.replace(estudiante.getUsuario(),monitor,estudiante);
         this.controlEstu.getListaMonitores().remove(monitor);
-    }
-    public void cargarCredenciales(){
-
-    }
-
-    public void crearUsuario(){
-
     }
 }
