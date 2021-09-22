@@ -6,6 +6,7 @@ import model.reportes.ReportesUsuarios;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class ControladorGeneral {
 
@@ -147,6 +148,70 @@ public class ControladorGeneral {
             System.out.println("El administrador no existe, intente nuevamente");
         }
     }
+/*
+    Map<UUID,String> cursosMonitores=new HashMap<>();
+        Map<UUID,String> cursosEstudiantes=new HashMap<>();
+        Map<UUID,String> cursosProfesores= new HashMap<>();
+        Map<String,UUID> monitoresCursosEstudiante = new HashMap<>();
+        Map<String,UUID> monitoresCursosMonitor = new HashMap<>();
+        Map<String,UUID> estudiantesCursos = new HashMap<>();
+        Map<String,UUID> profesorCursos = new HashMap<>();*/
+
+    public void asignarMonitoresACurso(UUID cursoID, String monitorId){
+        if(controlCursos.getListaCursos().containsKey(cursoID)&&controlEstu.getListaMonitores().containsKey(monitorId)){
+            controlCursos.buscarCurso(cursoID).getMonitoresCurso().put(monitorId,controlEstu.getListaMonitores().get(monitorId));
+        }else{
+            System.out.println("ERROR: El curso o el monitor no existen");
+        }
+    }
+
+    public void asignarEstudiantesACurso(UUID cursoID, String estudianteId){
+        if(controlCursos.getListaCursos().containsKey(cursoID)&&controlEstu.getListaEstudiantes().containsKey(estudianteId)){
+            controlCursos.buscarCurso(cursoID).getEstudiantesPertenecenCurso().put(estudianteId,controlEstu.getListaEstudiantes().get(estudianteId));
+        }else{
+            System.out.println("ERROR: El curso o el estudiante no existen");
+        }
+    }
+
+    public void asignarProfesoresACurso(UUID cursoID, String profesorId){
+        if(controlCursos.getListaCursos().containsKey(cursoID)&&controlProfe.getListaProfes().containsKey(profesorId)){
+            controlCursos.buscarCurso(cursoID).getProfesoresPertenecenCurso().put(profesorId,controlProfe.getListaProfes().get(profesorId));
+        }else{
+            System.out.println("ERROR: El curso o el profesor no existen");
+        }
+    }
+
+    public void asignarCursosDeEstudianteAMonitor(String monitorId, UUID cursoID){
+        if(controlCursos.getListaCursos().containsKey(cursoID)&&controlEstu.getListaMonitores().containsKey(monitorId)){
+            controlEstu.getListaMonitores().get(monitorId).getCursosPertenecenAEstudiante().put(cursoID,controlCursos.buscarCurso(cursoID));
+        }else{
+            System.out.println("ERROR: El monitor o el curso no existen");
+        }
+    }
+
+    public void asignarCursosDeMonitorAMonitor(String monitorId,UUID cursoID){
+        if(controlCursos.getListaCursos().containsKey(cursoID)&&controlEstu.getListaMonitores().containsKey(monitorId)){
+            controlEstu.getListaMonitores().get(monitorId).getCursosMonitor().put(cursoID,controlCursos.buscarCurso(cursoID));
+        }else{
+            System.out.println("ERROR: El monitor o el curso no existen");
+        }
+    }
+
+    public void asignarCursosAEstudiante(String estudianteID,UUID cursoID){
+        if(controlCursos.getListaCursos().containsKey(cursoID)&&controlEstu.getListaEstudiantes().containsKey(estudianteID)){
+            controlEstu.getListaEstudiantes().get(estudianteID).getCursosPertenecenAEstudiante().put(cursoID,controlCursos.buscarCurso(cursoID));
+        }else{
+            System.out.println("ERROR: El estudiante o el curso no existen");
+        }
+    }
+
+    public void asignarCursosAProfesores(String profesorID,UUID cursoID){
+        if(controlCursos.getListaCursos().containsKey(cursoID)&&controlProfe.getListaProfes().containsKey(profesorID)){
+            controlProfe.getListaProfes().get(profesorID).getCursosPertenecenAProfesor().put(cursoID,controlCursos.buscarCurso(cursoID));
+        }else{
+            System.out.println("ERROR: El profesor o el curso no existen");
+        }
+    }
 
     public void asignarEstudiante(Curso curso, Estudiante estudiante){
         Estudiante estEncontrado = controlEstu.buscarEstudiante(estudiante.getUsuario());
@@ -154,7 +219,7 @@ public class ControladorGeneral {
         if(estEncontrado!=null && cursoEncontrado!=null){
             if(!cursoEncontrado.getEstudiantesPertenecenCurso().containsValue(estudiante)){
                 cursoEncontrado.getEstudiantesPertenecenCurso().put(estEncontrado.getUsuario(), estEncontrado);
-                estEncontrado.getCursosPertenecenAEstudiante().put(curso.getIdCurso().toString(), curso);
+                estEncontrado.getCursosPertenecenAEstudiante().put(curso.getIdCurso(), curso);
             }
         }
         System.out.println("Fin de asignar estudient");

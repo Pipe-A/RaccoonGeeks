@@ -19,10 +19,7 @@ import utils.FileUtils;
 
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 public class InicioSesionAppController {
     private ControladorGeneral controladorGeneral=new ControladorGeneral();
@@ -246,13 +243,19 @@ public class InicioSesionAppController {
     public void llenarInfo(){
         File archivo =new File("ProgramInfo.txt");
         Scanner in =null;
-        Map<UUID,String> cursosMonitores=new HashMap<>();
-        Map<UUID,String> cursosEstudiantes=new HashMap<>();
-        Map<UUID,String> cursosProfesores= new HashMap<>();
-        Map<String,UUID> monitoresCursosEstudiante = new HashMap<>();
-        Map<String,UUID> monitoresCursosMonitor = new HashMap<>();
-        Map<String,UUID> estudiantesCursos = new HashMap<>();
-        Map<String,UUID> profesorCursos = new HashMap<>();
+        ArrayList<Map<UUID,ArrayList<String>>> MonitoresDelCurso = new ArrayList<>();
+        ArrayList<Map<UUID,ArrayList<String>>> EstudiantesDelCurso = new ArrayList<>();
+        ArrayList<Map<UUID,ArrayList<String>>> profesoresDelCurso = new ArrayList<>();
+        ArrayList<Map<String,ArrayList<UUID>>> cursosDeMonitorComoEstudiante=new ArrayList<>();
+        ArrayList<Map<String,ArrayList<UUID>>> cursosDeMonitorComoMonitor=new ArrayList<>();
+        ArrayList<Map<String,ArrayList<UUID>>> cursosDelEstudiante=new ArrayList<>();
+        ArrayList<Map<String,ArrayList<UUID>>> cursosDelProfesor=new ArrayList<>();
+         //Map<UUID,String> cursosEstudiantes=new HashMap<>();
+        //Map<UUID,String> cursosProfesores= new HashMap<>();
+        //Map<String,UUID> monitoresCursosEstudiante = new HashMap<>();
+        //Map<String,UUID> monitoresCursosMonitor = new HashMap<>();
+        //Map<String,UUID> estudiantesCursos = new HashMap<>();
+        //Map<String,UUID> profesorCursos = new HashMap<>();
 
         try{
             in= new Scanner(archivo);
@@ -274,29 +277,42 @@ public class InicioSesionAppController {
                     }
                 }
                 if(in.hasNext("<Curso>")&&in.next().equals("<Curso>")){
-
+                    int cont=0;
+                    Map<UUID,ArrayList<String>> mapMonitores=new HashMap<>();
+                    MonitoresDelCurso.add(mapMonitores);
                     Curso cur=new Curso();
                     cur.setIdCurso(UUID.fromString(in.next()));
                     cur.setNombreCurso(in.next());
 
                     if(in.next().equals("<MonitoresCurso>")){
+                        ArrayList <String> monitores=new ArrayList<>();
+                        MonitoresDelCurso.get(cont).put(cur.getIdCurso(),monitores);
                         while(!in.hasNext("</MonitoresCurso>")){
                             String usuario=in.next();
-                            cursosMonitores.put(cur.getIdCurso(),usuario);
+                            MonitoresDelCurso.get(cont).get(cur.getIdCurso()).add(usuario);
                         }
                         in.next();
                     }
+                    Map<UUID,ArrayList<String>> mapEstudiantes=new HashMap<>();
+                    EstudiantesDelCurso.add(mapEstudiantes);
                     if(in.next().equals("<EstudiantesCurso>")){
+                        ArrayList<String > estudiantes=new ArrayList<>();
+                        EstudiantesDelCurso.get(cont).put(cur.getIdCurso(),estudiantes);
                         while(!in.hasNext("</EstudiantesCurso>")){
                             String usuario=in.next();
-                            cursosEstudiantes.put(cur.getIdCurso(),usuario);
+                            EstudiantesDelCurso.get(cont).get(cur.getIdCurso()).add(usuario);
                         }
                         in.next();
                     }
+                    Map<UUID,ArrayList<String>> mapProfesores=new HashMap<>();
+                    profesoresDelCurso.add(mapProfesores);
                     if(in.next().equals("<ProfesoresCurso>")){
+                        ArrayList<String> profesores=new ArrayList<>();
+                        profesoresDelCurso.get(cont).put(cur.getIdCurso(),profesores);
                         while(!in.hasNext("</ProfesoresCurso>")){
                             String usuario=in.next();
-                            cursosProfesores.put(cur.getIdCurso(),usuario);
+                            profesoresDelCurso.get(cont).get(cur.getIdCurso()).add(usuario);
+                           // cursosProfesores.put(cur.getIdCurso(),usuario);
                         }
                        in.next();
                     }
@@ -304,10 +320,12 @@ public class InicioSesionAppController {
                         System.out.println("CURSOS GUARDADOS");
                         controladorGeneral.getControlCursos().getListaCursos().put(cur.getIdCurso(),cur);
                     }
+                    cont++;
                 }
+
                 //MONITORES------------------------------------
                 if(in.hasNext("<Monitor>")&&in.next().equals("<Monitor>")) {
-
+                    int cont=0;
                     Estudiante cur = new Monitor();
                     cur.setUsuario(in.next());
                     cur.setCorreo(in.next());
@@ -315,17 +333,26 @@ public class InicioSesionAppController {
                     cur.setNombre(in.next());
                     cur.setCarreraEstud(in.next());
                     cur.setDocumentoEstud(in.nextLong());
-
+                    Map<String,ArrayList<UUID>> mapCursosEstudiante=new HashMap<>() ;
+                    cursosDeMonitorComoEstudiante.add(mapCursosEstudiante);
                     if (in.next().equals("<CursosMonitorEstudiante>")){
+                        ArrayList<UUID> cursosMonitorEstudiante=new ArrayList<>();
+                        cursosDeMonitorComoEstudiante.get(cont).put(cur.getUsuario(),cursosMonitorEstudiante);
                         while (!(in.hasNext("</CursosMonitorEstudiante>"))) {
-                            monitoresCursosEstudiante.put(cur.getUsuario(), UUID.fromString(in.next()));
+                            cursosDeMonitorComoEstudiante.get(cont).get(cur.getUsuario()).add(UUID.fromString(in.next()));
+                            //monitoresCursosEstudiante.put(cur.getUsuario(), UUID.fromString(in.next()));
                         }
                         in.next();
                     }
+                    Map<String,ArrayList<UUID>> mapCursosMonitor=new HashMap<>();
+                    cursosDeMonitorComoMonitor.add(mapCursosMonitor);
                     if (in.next().equals("<CursosMonitor>")) {
+                        ArrayList<UUID> cursosMonitorMonitor=new ArrayList<>();
+                        cursosDeMonitorComoMonitor.get(cont).put(cur.getUsuario(),cursosMonitorMonitor);
                         while (!in.hasNext("</CursosMonitor>")) {
                             UUID curso = UUID.fromString(in.next());
-                            monitoresCursosMonitor.put(cur.getUsuario(), curso);
+                            cursosDeMonitorComoMonitor.get(cont).get(cur.getUsuario()).add(curso);
+                           // monitoresCursosMonitor.put(cur.getUsuario(), curso);
                         }
                         in.next();
                     }
@@ -334,9 +361,15 @@ public class InicioSesionAppController {
                         controladorGeneral.getControlEstu().getListaMonitores().put(cur.getUsuario(), (Monitor) cur);
                         controladorGeneral.getUsuarios().put(cur.getUsuario(), (Monitor) cur);
                     }
+                    cont++;
                 }
                 //ESTUDIANTES--------------------------
                 if(in.hasNext("<Estudiante>")&&in.next().equals("<Estudiante>")){
+
+                    int cont = 0;
+                    Map<String,ArrayList<UUID>> mapEstudiantes = new HashMap<>();
+                    cursosDelEstudiante.add(mapEstudiantes);
+
                     System.out.println("HACE ALGO EL SEGUNDO PUTO");
                     Estudiante cur=new Estudiante();
                     cur.setUsuario(in.next());
@@ -347,10 +380,13 @@ public class InicioSesionAppController {
                     cur.setDocumentoEstud(in.nextLong());
 
                     if(in.next().equals("<CursosEstudiante>")){
+                        ArrayList<UUID> cursos=new ArrayList<>();
+                        cursosDelEstudiante.get(cont).put(cur.getUsuario(),cursos);
                         while(!in.hasNext("</CursosEstudiante>")){
                             System.out.println("HACE ALGO EL TERCER PUTITO");
                             UUID curso=UUID.fromString(in.next());
-                            estudiantesCursos.put(cur.getUsuario(),curso);
+                            cursosDelEstudiante.get(cont).get(cur.getUsuario()).add(curso);
+                            //estudiantesCursos.put(cur.getUsuario(),curso);
                         }
                         in.next();
                     }
@@ -359,10 +395,15 @@ public class InicioSesionAppController {
                         controladorGeneral.getControlEstu().getListaEstudiantes().put(cur.getUsuario(), cur);
                         controladorGeneral.getUsuarios().put(cur.getUsuario(),cur);
                     }
+                    cont++;
                 }
 
                 //PROFESORES--------------------------
                 if(in.hasNext("<Profesor>")&&in.next().equals("<Profesor>")){
+                    int cont=0;
+                    Map<String,ArrayList<UUID>> mapCursos = new HashMap<>();
+                    cursosDelProfesor.add(mapCursos);
+
                     Profesor cur=new Profesor();
                     cur.setUsuario(in.next());
                     cur.setCorreo(in.next());
@@ -371,9 +412,12 @@ public class InicioSesionAppController {
                     cur.setCedulaProfe(in.nextLong());
 
                     if(in.next().equals("<CursosProfesor>")){
+                        ArrayList<UUID> cursos=new ArrayList<>();
+                        cursosDelProfesor.get(cont).put(cur.getUsuario(),cursos);
                         while(!in.hasNext("</CursosProfesor>")){
                             UUID curso=UUID.fromString(in.next());
-                            profesorCursos.put(cur.getUsuario(),curso);
+                            cursosDelProfesor.get(cont).get(cur.getUsuario()).add(curso);
+                            //profesorCursos.put(cur.getUsuario(),curso);
                         }
                         in.next();
                     }
@@ -382,6 +426,7 @@ public class InicioSesionAppController {
                         controladorGeneral.getControlProfe().getListaProfes().put(cur.getUsuario(),cur);
                         controladorGeneral.getUsuarios().put(cur.getUsuario(),cur);
                     }
+                    cont++;
                 }
 
             }
@@ -389,20 +434,74 @@ public class InicioSesionAppController {
         }catch(Exception ex){
             ex.printStackTrace();
         }
+/*
+ ArrayList<Map<UUID,ArrayList<String>>> MonitoresDelCurso = new ArrayList<>();
+        ArrayList<Map<UUID,ArrayList<String>>> EstudiantesDelCurso = new ArrayList<>();
+        ArrayList<Map<UUID,ArrayList<String>>> profesoresDelCurso = new ArrayList<>();
+        ArrayList<Map<String,ArrayList<UUID>>> cursosDeMonitorComoEstudiante=new ArrayList<>();
+        ArrayList<Map<String,ArrayList<UUID>>> cursosDeMonitorComoMonitor=new ArrayList<>();
+        ArrayList<Map<String,ArrayList<UUID>>> cursosDelEstudiante=new ArrayList<>();
+        ArrayList<Map<String,ArrayList<UUID>>> cursosDelProfesor=new ArrayList<>();
+ */
 
-        /*
-        *
-        cursosMonitores
-        cursosEstudiantes
-        cursosProfesores
-        monitoresCursosEstudiante
-        monitoresCursosMonitor
-        estudiantesCursos
-        profesorCursos
-        *
-        * */
+        for(Map<UUID,ArrayList<String>> Map: EstudiantesDelCurso) {
+            for (ArrayList<String> arr : Map.values()) {
+                for (String str : arr) {
+                    controladorGeneral.getControlCursos().getListaCursos().get(Map.keySet().iterator().next()).getEstudiantesPertenecenCurso().put(str, controladorGeneral.getControlEstu().getListaEstudiantes().get(str));
 
+                }
+            }
+        }
 
+        for(Map<UUID,ArrayList<String>> Map: MonitoresDelCurso) {
+            for (ArrayList<String> arr : Map.values()) {
+                for (String str : arr) {
+                    controladorGeneral.getControlCursos().getListaCursos().get(Map.keySet().iterator().next()).getMonitoresCurso().put(str, controladorGeneral.getControlEstu().getListaMonitores().get(str));
+
+                }
+            }
+        }
+
+        for(Map<UUID,ArrayList<String>> Map: profesoresDelCurso) {
+            for (ArrayList<String> arr : Map.values()) {
+                for (String str : arr) {
+                    controladorGeneral.getControlCursos().getListaCursos().get(Map.keySet().iterator().next()).getProfesoresPertenecenCurso().put(str, controladorGeneral.getControlProfe().getListaProfes().get(str));
+
+                }
+            }
+        }
+
+        for(Map<String,ArrayList<UUID>> Map: cursosDeMonitorComoEstudiante) {
+            for (ArrayList<UUID> arr : Map.values()) {
+                for (UUID str : arr) {
+                    controladorGeneral.getControlEstu().getListaMonitores().get(Map.keySet().iterator().next()).getCursosPertenecenAEstudiante().put(str,controladorGeneral.getControlCursos().getListaCursos().get(str));
+                }
+            }
+        }
+
+        for(Map<String,ArrayList<UUID>> Map: cursosDeMonitorComoMonitor) {
+            for (ArrayList<UUID> arr : Map.values()) {
+                for (UUID str : arr) {
+                    controladorGeneral.getControlEstu().getListaMonitores().get(Map.keySet().iterator().next()).getCursosMonitor().put(str,controladorGeneral.getControlCursos().getListaCursos().get(str));
+                }
+            }
+        }
+
+        for(Map<String,ArrayList<UUID>> Map: cursosDelEstudiante) {
+            for (ArrayList<UUID> arr : Map.values()) {
+                for (UUID str : arr) {
+                    controladorGeneral.getControlEstu().getListaEstudiantes().get(Map.keySet().iterator().next()).getCursosPertenecenAEstudiante().put(str,controladorGeneral.getControlCursos().getListaCursos().get(str));
+                }
+            }
+        }
+
+        for(Map<String,ArrayList<UUID>> Map: cursosDelProfesor) {
+            for (ArrayList<UUID> arr : Map.values()) {
+                for (UUID str : arr) {
+                    controladorGeneral.getControlProfe().getListaProfes().get(Map.keySet().iterator().next()).getCursosPertenecenAProfesor().put(str,controladorGeneral.getControlCursos().getListaCursos().get(str));
+                }
+            }
+        }
 
     }
 

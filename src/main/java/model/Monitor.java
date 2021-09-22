@@ -13,12 +13,12 @@ public class Monitor extends Estudiante {
     public Monitor() {
     }
 
-    public Monitor(String usuario, String contrasenna, String nombre, String correo, String carreraEstud, Long documentoEstud, TipoGeneral tipo, Map<String, Curso> listaCursosEstudiante, Map<UUID, Curso> cursosMonitor) {
+    public Monitor(String usuario, String contrasenna, String nombre, String correo, String carreraEstud, Long documentoEstud, TipoGeneral tipo, Map<UUID, Curso> listaCursosEstudiante, Map<UUID, Curso> cursosMonitor) {
         super(usuario, contrasenna, nombre, correo, carreraEstud, documentoEstud, tipo, listaCursosEstudiante);
         CursosMonitor = cursosMonitor;
     }
 
-    public Monitor(String usuario, String contrasenna, String nombre, String correo, String carreraEstud, Long documentoEstud, TipoGeneral tipo, Map<String, Curso> listaCursosEstudiante) {
+    public Monitor(String usuario, String contrasenna, String nombre, String correo, String carreraEstud, Long documentoEstud, TipoGeneral tipo, Map<UUID, Curso> listaCursosEstudiante) {
         super(usuario, contrasenna, nombre, correo, carreraEstud, documentoEstud, tipo, listaCursosEstudiante);
     }
 
