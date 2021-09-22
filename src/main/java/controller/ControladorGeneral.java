@@ -139,8 +139,9 @@ public class ControladorGeneral {
         if (buscarAdministradores(admin.getUsuario()) != null) {
             System.out.println("Administrador encontrado!");
             System.out.println(admin.toString());
-            // this.listaClientes.remove(this.listaClientes.indexOf(cliente));
-            this.listaAdministrador.remove(admin.getCarreraAdmin());
+            // this.listaClientes.remove(this.listaClientes.indexOf(cliente);
+            this.listaAdministrador.remove(admin);
+            this.usuarios.remove(admin);
             System.out.println("El administrador ha sido eliminado con exito! ");
         }else{
             System.out.println("El administrador no existe, intente nuevamente");
