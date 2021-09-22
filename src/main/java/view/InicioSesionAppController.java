@@ -22,11 +22,10 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class InicioSesionAppController {
     private ControladorGeneral controladorGeneral=new ControladorGeneral();
-
-
 
     @FXML
     private PasswordField fieldContraseña;
@@ -45,23 +44,6 @@ public class InicioSesionAppController {
     @FXML
     void generarArchivo(ActionEvent event) {
 
-        Usuario admin = new Administrativo("Mau","mau1","Mauren","mauriv","Sistemas",12345L,TipoGeneral.ADMINISTRATIVO);
-        controladorGeneral.guardarUsuario(admin);
-
-        Profesor profeNuevo = new Profesor("profeWilly","holamundo","Willy","willy.com","Sistemas",123123l,TipoProfesor.DE_PLANTA,TipoGeneral.PROFESOR,null);
-        controladorGeneral.getControlProfe().insertarProfesor((Profesor) profeNuevo);
-        controladorGeneral.guardarUsuario(profeNuevo);
-
-        Usuario estNuevo = new Estudiante("est1","estu","Pedro","arquitect","est@122",98765L, TipoGeneral.ESTUDIANTE,null);
-        controladorGeneral.getControlEstu().insertarEstudiante((Estudiante) estNuevo);
-        controladorGeneral.guardarUsuario(estNuevo);
-
-        System.out.println("**************DESPUÉS DE CREAR EL CURSO**************");
-
-        controladorGeneral.getControlProfe().consultarProfesores();
-        controladorGeneral.getControlCursos().consultarCurso();
-        controladorGeneral.getControlEstu().consultarEstudiantes();
-
         FileWriter archivo=null;
         try{
             archivo=new FileWriter("ProgramInfo.txt");
@@ -72,7 +54,7 @@ public class InicioSesionAppController {
                 archivo.write("\n");
                 archivo.write(cur.getNombreCurso());
                 archivo.write("\n");
-                archivo.write("<Monitores>");
+                archivo.write("<MonitoresCurso>");
                 archivo.write("\n");
                 if(cur.getMonitoresCurso()!=null){
                     for (Monitor monitor: cur.getMonitoresCurso().values()) {
@@ -80,9 +62,9 @@ public class InicioSesionAppController {
                         archivo.write("\n");
                     }
                 }
-                archivo.write("</Monitores>");
+                archivo.write("</MonitoresCurso>");
                 archivo.write("\n");
-                archivo.write("<Estudiantes>");
+                archivo.write("<EstudiantesCurso>");
                 archivo.write("\n");
 
                 if(cur.getEstudiantesPertenecenCurso()!=null) {
@@ -91,9 +73,9 @@ public class InicioSesionAppController {
                         archivo.write("\n");
                     }
                 }
-                archivo.write("</Estudiantes>");
+                archivo.write("</EstudiantesCurso>");
                 archivo.write("\n");
-                archivo.write("<Profesores>");
+                archivo.write("<ProfesoresCurso>");
                 archivo.write("\n");
                 if(cur.getProfesoresPertenecenCurso()!=null){
                     for(Profesor profesor: cur.getProfesoresPertenecenCurso().values()){
@@ -101,15 +83,52 @@ public class InicioSesionAppController {
                         archivo.write("\n");
                     }
                 }
-                archivo.write("</Profesores>");
+                archivo.write("</ProfesoresCurso>");
                 archivo.write("\n");
                 archivo.write("</Curso>");
                 archivo.write("\n");
-
             }
 
             for(Usuario usr: controladorGeneral.getUsuarios().values()){
-                if(usr instanceof Estudiante){
+                if(usr instanceof Monitor){
+                    archivo.write("<Monitor>");
+                    archivo.write("\n");
+                    archivo.write(usr.getUsuario());
+                    archivo.write("\n");
+                    archivo.write(usr.getCorreo());
+                    archivo.write("\n");
+                    archivo.write(usr.getContrasenna());
+                    archivo.write("\n");
+                    archivo.write(usr.getNombre());
+                    archivo.write("\n");
+                    archivo.write(((Monitor) usr).getCarreraEstud());
+                    archivo.write("\n");
+                    archivo.write(((Monitor) usr).getDocumentoEstud().toString());
+                    archivo.write("\n");
+                    archivo.write("<CursosMonitorEstudiante>");
+
+                    archivo.write("\n");
+                    if(((Monitor) usr).getCursosPertenecenAEstudiante()!=null){
+                        for(Curso curso: ((Monitor) usr).getCursosPertenecenAEstudiante().values()){
+                            archivo.write(curso.getIdCurso().toString());
+                            archivo.write("\n");
+                        }
+                    }
+                    archivo.write("</CursosMonitorEstudiante>");
+                    archivo.write("\n");
+                    archivo.write("<CursosMonitor>");
+                    if(((Monitor)usr).getCursosMonitor()!=null){
+                        for(Curso curso: ((Monitor) usr).getCursosMonitor().values()){
+                            archivo.write(curso.getIdCurso().toString());
+                            archivo.write("\n");
+                        }
+                    }
+                    archivo.write("</CursosMonitor>");
+
+                    archivo.write("</Monitor>");
+                    archivo.write("\n");
+                }
+                else if(usr instanceof Estudiante){
                     archivo.write("<Estudiante>");
                     archivo.write("\n");
                     archivo.write(usr.getUsuario());
@@ -124,7 +143,7 @@ public class InicioSesionAppController {
                     archivo.write("\n");
                     archivo.write(((Estudiante) usr).getDocumentoEstud().toString());
                     archivo.write("\n");
-                    archivo.write("<Cursos>");
+                    archivo.write("<CursosEstudiante>");
 
                     archivo.write("\n");
                     if(((Estudiante) usr).getCursosPertenecenAEstudiante()!=null){
@@ -133,7 +152,7 @@ public class InicioSesionAppController {
                             archivo.write("\n");
                         }
                     }
-                    archivo.write("</Cursos>");
+                    archivo.write("</CursosEstudiante>");
                     archivo.write("\n");
                     archivo.write("</Estudiante>");
                     archivo.write("\n");
@@ -153,7 +172,7 @@ public class InicioSesionAppController {
                     archivo.write(String.valueOf(((Profesor) usr).getCedulaProfe()));
                     archivo.write("\n");
 
-                    archivo.write("<Cursos>");
+                    archivo.write("<CursosProfesor>");
                     archivo.write("\n");
                     if(((Profesor) usr).getCursosPertenecenAProfesor()!=null){
                         for(Curso curso: ((Profesor) usr).getCursosPertenecenAProfesor().values()) {
@@ -162,7 +181,7 @@ public class InicioSesionAppController {
                         }
                     }
 
-                    archivo.write("</Cursos>");
+                    archivo.write("</CursosProfesor>");
                     archivo.write("\n");
 
                     archivo.write("</Profesor>");
@@ -177,8 +196,6 @@ public class InicioSesionAppController {
                     archivo.write(usr.getContrasenna());
                     archivo.write("\n");
                     archivo.write(usr.getNombre());
-                    archivo.write("\n");
-                    archivo.write(String.valueOf(((Administrativo) usr).getCarreraAdmin()));
                     archivo.write("\n");
                     archivo.write(String.valueOf(((Administrativo) usr).getCedulaAdmin()));
                     archivo.write("\n");
@@ -229,16 +246,164 @@ public class InicioSesionAppController {
     public void llenarInfo(){
         File archivo =new File("ProgramInfo.txt");
         Scanner in =null;
+        Map<UUID,String> cursosMonitores=new HashMap<>();
+        Map<UUID,String> cursosEstudiantes=new HashMap<>();
+        Map<UUID,String> cursosProfesores= new HashMap<>();
+        Map<String,UUID> monitoresCursosEstudiante = new HashMap<>();
+        Map<String,UUID> monitoresCursosMonitor = new HashMap<>();
+        Map<String,UUID> estudiantesCursos = new HashMap<>();
+        Map<String,UUID> profesorCursos = new HashMap<>();
 
         try{
             in= new Scanner(archivo);
             while (in.hasNext()){
+                //ADMINISTRADORES--------------------------
+                if(in.hasNext("<Administrativo>")&&in.next().equals("<Administrativo>")){
+                    System.out.println("HACE ALGO EL PUTO");
+                    Administrativo cur=new Administrativo();
+                    cur.setUsuario(in.next());
+                    cur.setCorreo(in.next());
+                    cur.setContrasenna(in.next());
+                    cur.setNombre(in.next());
+                    cur.setCedulaAdmin(in.nextLong());
+
+                    if(in.next().equals("</Administrativo>")){
+                        System.out.println("ADMINISTRADORES GUARDADOS");
+                        controladorGeneral.getListaAdministrador().put(cur.getUsuario(),cur);
+                        controladorGeneral.getUsuarios().put(cur.getUsuario(),cur);
+                    }
+                }
+                if(in.hasNext("<Curso>")&&in.next().equals("<Curso>")){
+
+                    Curso cur=new Curso();
+                    cur.setIdCurso(UUID.fromString(in.next()));
+                    cur.setNombreCurso(in.next());
+
+                    if(in.next().equals("<MonitoresCurso>")){
+                        while(!in.hasNext("</MonitoresCurso>")){
+                            String usuario=in.next();
+                            cursosMonitores.put(cur.getIdCurso(),usuario);
+                        }
+                        in.next();
+                    }
+                    if(in.next().equals("<EstudiantesCurso>")){
+                        while(!in.hasNext("</EstudiantesCurso>")){
+                            String usuario=in.next();
+                            cursosEstudiantes.put(cur.getIdCurso(),usuario);
+                        }
+                        in.next();
+                    }
+                    if(in.next().equals("<ProfesoresCurso>")){
+                        while(!in.hasNext("</ProfesoresCurso>")){
+                            String usuario=in.next();
+                            cursosProfesores.put(cur.getIdCurso(),usuario);
+                        }
+                       in.next();
+                    }
+                    if(in.next().equals("</Curso>")){
+                        System.out.println("CURSOS GUARDADOS");
+                        controladorGeneral.getControlCursos().getListaCursos().put(cur.getIdCurso(),cur);
+                    }
+                }
+                //MONITORES------------------------------------
+                if(in.hasNext("<Monitor>")&&in.next().equals("<Monitor>")) {
+
+                    Estudiante cur = new Monitor();
+                    cur.setUsuario(in.next());
+                    cur.setCorreo(in.next());
+                    cur.setContrasenna(in.next());
+                    cur.setNombre(in.next());
+                    cur.setCarreraEstud(in.next());
+                    cur.setDocumentoEstud(in.nextLong());
+
+                    if (in.next().equals("<CursosMonitorEstudiante>")){
+                        while (!(in.hasNext("</CursosMonitorEstudiante>"))) {
+                            monitoresCursosEstudiante.put(cur.getUsuario(), UUID.fromString(in.next()));
+                        }
+                        in.next();
+                    }
+                    if (in.next().equals("<CursosMonitor>")) {
+                        while (!in.hasNext("</CursosMonitor>")) {
+                            UUID curso = UUID.fromString(in.next());
+                            monitoresCursosMonitor.put(cur.getUsuario(), curso);
+                        }
+                        in.next();
+                    }
+                    if (in.next().equals("</Monitor>")) {
+                        System.out.println("MONITORES GUARDADOS");
+                        controladorGeneral.getControlEstu().getListaMonitores().put(cur.getUsuario(), (Monitor) cur);
+                        controladorGeneral.getUsuarios().put(cur.getUsuario(), (Monitor) cur);
+                    }
+                }
+                //ESTUDIANTES--------------------------
+                if(in.hasNext("<Estudiante>")&&in.next().equals("<Estudiante>")){
+                    System.out.println("HACE ALGO EL SEGUNDO PUTO");
+                    Estudiante cur=new Estudiante();
+                    cur.setUsuario(in.next());
+                    cur.setCorreo(in.next());
+                    cur.setContrasenna(in.next());
+                    cur.setNombre(in.next());
+                    cur.setCarreraEstud(in.next());
+                    cur.setDocumentoEstud(in.nextLong());
+
+                    if(in.next().equals("<CursosEstudiante>")){
+                        while(!in.hasNext("</CursosEstudiante>")){
+                            System.out.println("HACE ALGO EL TERCER PUTITO");
+                            UUID curso=UUID.fromString(in.next());
+                            estudiantesCursos.put(cur.getUsuario(),curso);
+                        }
+                        in.next();
+                    }
+                    if(in.next().equals("</Estudiante>")){
+                        System.out.println("Estudiantes GUARDADOS");
+                        controladorGeneral.getControlEstu().getListaEstudiantes().put(cur.getUsuario(), cur);
+                        controladorGeneral.getUsuarios().put(cur.getUsuario(),cur);
+                    }
+                }
+
+                //PROFESORES--------------------------
+                if(in.hasNext("<Profesor>")&&in.next().equals("<Profesor>")){
+                    Profesor cur=new Profesor();
+                    cur.setUsuario(in.next());
+                    cur.setCorreo(in.next());
+                    cur.setContrasenna(in.next());
+                    cur.setNombre(in.next());
+                    cur.setCedulaProfe(in.nextLong());
+
+                    if(in.next().equals("<CursosProfesor>")){
+                        while(!in.hasNext("</CursosProfesor>")){
+                            UUID curso=UUID.fromString(in.next());
+                            profesorCursos.put(cur.getUsuario(),curso);
+                        }
+                        in.next();
+                    }
+                    if(in.next().equals("</Profesor>")){
+                        System.out.println("PROFESORES GUARDADOS");
+                        controladorGeneral.getControlProfe().getListaProfes().put(cur.getUsuario(),cur);
+                        controladorGeneral.getUsuarios().put(cur.getUsuario(),cur);
+                    }
+                }
 
             }
 
         }catch(Exception ex){
             ex.printStackTrace();
         }
+
+        /*
+        *
+        cursosMonitores
+        cursosEstudiantes
+        cursosProfesores
+        monitoresCursosEstudiante
+        monitoresCursosMonitor
+        estudiantesCursos
+        profesorCursos
+        *
+        * */
+
+
+
     }
 
     @FXML

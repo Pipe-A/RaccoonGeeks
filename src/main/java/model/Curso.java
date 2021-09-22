@@ -16,6 +16,8 @@ public class Curso {
         this.estudiantesPertenecenCurso = estudiantesCurso;
     }
 
+    public Curso(){}
+
     public Map<String, Monitor> getMonitoresCurso() {
         return monitoresCurso;
     }

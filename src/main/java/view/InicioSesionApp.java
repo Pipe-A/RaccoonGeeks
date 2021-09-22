@@ -33,6 +33,8 @@ public class InicioSesionApp extends Application {
     }
 
     public static void main(String[] args) {
+        InicioSesionAppController inicio=new InicioSesionAppController();
+        inicio.llenarInfo();
         launch(args);
     }
 }
