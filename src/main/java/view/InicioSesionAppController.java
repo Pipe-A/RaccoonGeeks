@@ -452,15 +452,6 @@ public class InicioSesionAppController {
         }catch(Exception ex){
             ex.printStackTrace();
         }
-/*
- ArrayList<Map<UUID,ArrayList<String>>> MonitoresDelCurso = new ArrayList<>();
-        ArrayList<Map<UUID,ArrayList<String>>> EstudiantesDelCurso = new ArrayList<>();
-        ArrayList<Map<UUID,ArrayList<String>>> profesoresDelCurso = new ArrayList<>();
-        ArrayList<Map<String,ArrayList<UUID>>> cursosDeMonitorComoEstudiante=new ArrayList<>();
-        ArrayList<Map<String,ArrayList<UUID>>> cursosDeMonitorComoMonitor=new ArrayList<>();
-        ArrayList<Map<String,ArrayList<UUID>>> cursosDelEstudiante=new ArrayList<>();
-        ArrayList<Map<String,ArrayList<UUID>>> cursosDelProfesor=new ArrayList<>();
- */
 
         for(Map<UUID,ArrayList<String>> Map: EstudiantesDelCurso) {
             for (ArrayList<String> arr : Map.values()) {
