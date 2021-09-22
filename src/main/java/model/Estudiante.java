@@ -6,6 +6,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
@@ -13,10 +14,10 @@ public class Estudiante extends Usuario {
     private String carreraEstud;
     private Long documentoEstud;
     private TipoGeneral tipo;
-    private Map<String, Curso> cursosPertenecenAEstudiante = new HashMap<>();
+    private Map<UUID, Curso> cursosPertenecenAEstudiante = new HashMap<>();
 
     public Estudiante(){}
-    public Estudiante(String usuario, String contrasenna, String nombre, String correo, String carreraEstud, Long documentoEstud, TipoGeneral tipo, Map<String, Curso> listaCursosEstudiante) {
+    public Estudiante(String usuario, String contrasenna, String nombre, String correo, String carreraEstud, Long documentoEstud, TipoGeneral tipo, Map<UUID, Curso> listaCursosEstudiante) {
         super(usuario, contrasenna, nombre, correo);
         this.carreraEstud = carreraEstud;
         this.documentoEstud = documentoEstud;
@@ -38,10 +39,10 @@ public class Estudiante extends Usuario {
     public void setDocumentoEstud(Long documentoEstud) {
         this.documentoEstud = documentoEstud;
     }
-    public Map<String, Curso> getCursosPertenecenAEstudiante() {
+    public Map<UUID, Curso> getCursosPertenecenAEstudiante() {
         return cursosPertenecenAEstudiante;
     }
-    public void setCursosPertenecenAEstudiante(HashMap<String, Curso> cursosPertenecenAEstudiante) {
+    public void setCursosPertenecenAEstudiante(Map<UUID, Curso> cursosPertenecenAEstudiante) {
         this.cursosPertenecenAEstudiante = cursosPertenecenAEstudiante;
     }
 
