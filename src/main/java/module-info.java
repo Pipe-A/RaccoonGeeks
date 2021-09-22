@@ -9,8 +9,6 @@ module view {
 
     exports view;
     opens view to javafx.fxml;
-    exports model.reportes;
-    opens model.reportes to com.sun.xml.bind;
 }
 /*
 
