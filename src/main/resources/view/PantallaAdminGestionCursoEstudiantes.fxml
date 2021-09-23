@@ -1,24 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="746.0" style="-fx-background-color: E4F8FA;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PantallaAdminGestionCursoEstudiantesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="746.0" style="-fx-background-color: E4F8FA;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PantallaAdminGestionCursoEstudiantesController">
 <children>
 <SplitPane dividerPositions="0.4128065395095368" prefHeight="456.0" prefWidth="746.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
   <items>
@@ -92,14 +79,9 @@
   </items>
 </SplitPane>
 <Button fx:id="btnRegresarCursoPrincipal" layoutX="598.0" layoutY="18.0" mnemonicParsing="false" onAction="#regresarCursoPrincipal" text="Regresar curso principal" />
-<Label layoutX="207.0" layoutY="10.0" text="Chalkboard - Gestionar Curso">
+<Label layoutX="6.0" layoutY="13.0" text="Chalkboard - Gestionar Curso-Estudiante">
   <font>
       <Font name="System Bold" size="24.0" />
-  </font>
-</Label>
-<Label layoutX="20.0" layoutY="23.0" prefHeight="18.0" prefWidth="141.0" text="Mauren Natalia Rivera Bautista">
-  <font>
-      <Font size="9.0" />
   </font>
 </Label>
 <Label layoutX="639.0" layoutY="431.0" text="Chalkboard® 2021" />
