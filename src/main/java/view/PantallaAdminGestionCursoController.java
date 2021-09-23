@@ -111,7 +111,7 @@ public class PantallaAdminGestionCursoController {
                 ex.printStackTrace();
             }
         });
-        Stage myStage = (Stage) this.btnMonitoresDelCurso.getScene().getWindow();
+        Stage myStage = (Stage) this.btnProfesDelCurso.getScene().getWindow();
         myStage.close();
     }
 

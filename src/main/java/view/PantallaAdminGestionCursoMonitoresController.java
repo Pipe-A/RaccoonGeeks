@@ -69,5 +69,4 @@ public class PantallaAdminGestionCursoMonitoresController {
         Stage myStage = (Stage) this.btnRegresarCursoPrincipal.getScene().getWindow();
         myStage.close();
     }
-
 }
