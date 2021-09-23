@@ -6,6 +6,7 @@ import model.Monitor;
 
 import java.util.HashMap;
 import java.util.Map;
+//hola xd
 
 public class ControladorEstudiante {
     private Map<String, Estudiante> listaEstudiantes = new HashMap<>();
