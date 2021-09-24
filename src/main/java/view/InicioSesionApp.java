@@ -7,15 +7,16 @@ import controller.ControladorProfesor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.*;
 
 import java.io.IOException;
 import java.security.spec.ECParameterSpec;
+import java.util.Objects;
 
 public class InicioSesionApp extends Application {
-
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -26,6 +27,8 @@ public class InicioSesionApp extends Application {
             // Cargo el scene
             Scene scene = new Scene(ventana);
             // Seteo la scene y la muestro
+            primaryStage.setTitle("Chalkboard");
+            primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("CHALKBOARD.png"))));
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {

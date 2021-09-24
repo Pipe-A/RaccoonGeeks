@@ -1,15 +1,21 @@
 package view;
 
+import controller.ControladorGeneral;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.Curso;
+
+import javafx.fxml.*;
+import model.global;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class PantallaAdminGestionCursoController {
 
@@ -41,6 +47,20 @@ public class PantallaAdminGestionCursoController {
     private Button btnRegresarMenuAdmin;
 
     @FXML
+    private TableView<Curso> tablaCursos=new TableView<>();
+
+    @FXML
+    private TableColumn<Curso, UUID> columnaID= new TableColumn<>("IdCurso");
+/*
+TableView<Curso> tableView = new TableView();
+TableColumn<Curso, String> columnaID = new TableColumn<>("Nombre");
+TableColumn<Curso, String> columnaNmbre = new TableColumn<>("Apellido");
+tableView.getColumns().addAll(colNombre, colApellido);
+ */
+    @FXML
+    private TableColumn<Curso, String> columnaNombre = new TableColumn<>("NombreCurso");
+
+    @FXML
     void RegistrarCurso(ActionEvent event) {
 
     }
@@ -55,11 +75,32 @@ public class PantallaAdminGestionCursoController {
 
     }
 
+    public void renderWindowCursos() {
+        btnEstuDelCurso.setDisable(true);
+        clearWindowCursos();
+        tablaCursos.getItems().addAll(global.controladorGeneral.getControlCursos().getListaCursos().values());
+    }
+
+    public void clearWindowCursos() {
+        tablaCursos.getItems().removeAll();
+    }
+
+    @FXML
+    public void llenarCampos(MouseEvent event){
+        btnEstuDelCurso.setDisable(false);
+        Curso curso=tablaCursos.getSelectionModel().getSelectedItem();
+        IDCurso.setText(String.valueOf(curso.getIdCurso()));
+        nombreCurso.setText(curso.getNombreCurso());
+
+    }
+
     @FXML
     void estuDelCurso(ActionEvent event) throws IOException {
+        Curso curso=tablaCursos.getSelectionModel().getSelectedItem();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("PantallaAdminGestionCursoEstudiantes.fxml"));
         Parent root = loader.load();
         PantallaAdminGestionCursoEstudiantesController pantallaAdminGestionCursoEstudiantesController = loader.getController();
+        pantallaAdminGestionCursoEstudiantesController.setIdCurso(curso.getIdCurso());
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -71,7 +112,7 @@ public class PantallaAdminGestionCursoController {
                 ex.printStackTrace();
             }
         });
-        Stage myStage = (Stage) this.btnEstuDelCurso .getScene().getWindow();
+        Stage myStage = (Stage) this.btnEstuDelCurso.getScene().getWindow();
         myStage.close();
     }
 
