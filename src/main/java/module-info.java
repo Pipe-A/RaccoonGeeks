@@ -9,6 +9,9 @@ module view {
 
     exports view;
     opens view to javafx.fxml;
+    exports model;
+    opens  model to javafx.fxml;
+
 }
 /*
 

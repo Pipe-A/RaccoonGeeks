@@ -1,5 +1,6 @@
 package view;
 
+import controller.ControladorGeneral;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,10 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import model.global;
 
 import java.io.IOException;
 
 public class PantallaPrincipalAdminController {
+
 
     @FXML
     private Button btnGestionarProfe;
@@ -55,22 +58,27 @@ public class PantallaPrincipalAdminController {
 
     @FXML
     void gestionarEst(ActionEvent event) throws IOException {
+        /*
+
+        HACER CAMBIOOOOOO
         FXMLLoader loader = new FXMLLoader(getClass().getResource("PantallaAdminGestionEstudiante.fxml"));
         Parent root = loader.load();
-        PantallaAdminGestionEstudianteController pantallaEstudianteController = loader.getController();
+        pantallaAdminGestionCursoEstudiantesController = loader.getController();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(e-> {
             try {
-                pantallaEstudianteController.regresarMenuAdmin(event);
+                pantallaAdminGestionCursoController.regresarMenuAdmin(event);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         });
         Stage myStage = (Stage) this.btnGestionarEst.getScene().getWindow();
         myStage.close();
+
+         */
     }
 
     @FXML
@@ -96,6 +104,7 @@ public class PantallaPrincipalAdminController {
 
     @FXML
     void cerrarSesionAdmin(ActionEvent event) throws IOException {
+        global.controladorGeneral.generarArchivo();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("PantallaInicio.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
