@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PantallaAdminGestionCursoController">
 <children>
@@ -25,20 +26,32 @@
                 <items>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                         <children>
-                            <TableView layoutX="20.0" layoutY="101.0" prefHeight="338.0" prefWidth="314.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <TableView fx:id="tablaCursos" layoutX="20.0" layoutY="101.0" onMouseClicked="#llenarCampos" prefHeight="338.0" prefWidth="314.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <placeholder>
+                                    <Label text="Oprima el botón Ver Cursos" />
+                                </placeholder>
                                 <columns>
-                                    <TableColumn prefWidth="51.0" text="ID" />
-                                    <TableColumn prefWidth="197.0" text="Nombre" />
+                                    <TableColumn fx:id="columnaID" prefWidth="51.0" text="ID" >
+                                        <cellValueFactory>
+                                            <javafx.scene.control.cell.PropertyValueFactory property="IdCurso" />
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn fx:id="columnaNombre" prefWidth="197.0" text="Nombre" >
+                                        <cellValueFactory>
+                                            <javafx.scene.control.cell.PropertyValueFactory property="NombreCurso" />
+                                        </cellValueFactory>
+                                    </TableColumn>
                                 </columns>
                                 <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                 </columnResizePolicy>
                             </TableView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                         </children>
                     </AnchorPane>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                         <children>
-                            <Label layoutX="29.0" layoutY="6.0" text="Detalles del profesor" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+                            <Label layoutX="29.0" layoutY="6.0" text="Detalles del curso" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
                                 <font>
                                     <Font name="System Bold" size="15.0" />
                                 </font>
@@ -68,7 +81,7 @@
                             </HBox>
                             <VBox layoutX="14.0" layoutY="275.0" spacing="7.0">
                                 <children>
-                                    <Button fx:id="btnEstuDelCurso" mnemonicParsing="false" onAction="#estuDelCurso" prefHeight="25.0" prefWidth="173.0" text="Estudiantes del curso" />
+                                    <Button fx:id="btnEstuDelCurso" mnemonicParsing="false" onAction="#estuDelCurso" prefHeight="25.0" prefWidth="173.0" text="Estudiantes del curso" disable="true" />
                                     <Button fx:id="btnMonitoresDelCuso" mnemonicParsing="false" onAction="#monitoresDelCurso" prefHeight="25.0" prefWidth="173.0" text="Monitores del curso" />
                                     <Button fx:id="btnProfesDelCurso" mnemonicParsing="false" onAction="#profesDelCurso" prefHeight="25.0" prefWidth="173.0" text="Profesores del curso" />
                                 </children>
@@ -86,6 +99,7 @@
                     </Menu>
                 </menus>
             </MenuBar>
+            <Button fx:id="btnVerCursos" layoutX="184.0" layoutY="431.0" mnemonicParsing="false" onAction="#renderWindowCursos" text="Ver Cursos" />
         </children>
         <padding>
             <Insets bottom="35.0" left="5.0" right="5.0" top="50.0" />

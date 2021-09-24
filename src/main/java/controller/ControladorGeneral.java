@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 
+import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -256,5 +257,222 @@ public class ControladorGeneral {
         }
         this.usuarios.replace(estudiante.getUsuario(),monitor,estudiante);
         this.controlEstu.getListaMonitores().remove(monitor);
+    }
+
+    public void generarArchivo() {
+
+        FileWriter archivo=null;
+        try{
+            archivo=new FileWriter("ProgramInfo.txt");
+            for(Curso cur: global.controladorGeneral.getControlCursos().getListaCursos().values()){
+                archivo.write("<Curso>");
+                archivo.write("\n");
+                archivo.write(cur.getIdCurso().toString());
+                archivo.write("\n");
+                archivo.write(cur.getNombreCurso());
+                archivo.write("\n");
+                archivo.write("<MonitoresCurso>");
+                archivo.write("\n");
+                if(cur.getMonitoresCurso()!=null){
+                    for (Monitor monitor: cur.getMonitoresCurso().values()) {
+                        if(monitor!=null) {
+                            archivo.write(monitor.getUsuario());
+                            archivo.write("\n");
+                        }
+                    }
+                }
+                archivo.write("</MonitoresCurso>");
+                archivo.write("\n");
+                archivo.write("<EstudiantesCurso>");
+                archivo.write("\n");
+
+                if(cur.getEstudiantesPertenecenCurso()!=null) {
+                    for (Estudiante est : cur.getEstudiantesPertenecenCurso().values()) {
+                        if(est!=null){
+                            archivo.write(est.getUsuario());
+                            archivo.write("\n");
+                        }
+                    }
+                }
+                archivo.write("</EstudiantesCurso>");
+                archivo.write("\n");
+                archivo.write("<ProfesoresCurso>");
+                archivo.write("\n");
+                if(cur.getProfesoresPertenecenCurso()!=null){
+                    for(Profesor profesor: cur.getProfesoresPertenecenCurso().values()){
+                        archivo.write(profesor.getUsuario());
+                        archivo.write("\n");
+                    }
+                }
+                archivo.write("</ProfesoresCurso>");
+                archivo.write("\n");
+                archivo.write("</Curso>");
+                archivo.write("\n");
+            }
+
+            for(Usuario usr: global.controladorGeneral.getUsuarios().values()){
+                if(usr instanceof Monitor){
+                    archivo.write("<Monitor>");
+                    archivo.write("\n");
+                    archivo.write(usr.getUsuario());
+                    archivo.write("\n");
+                    archivo.write(usr.getCorreo());
+                    archivo.write("\n");
+                    archivo.write(usr.getContrasenna());
+                    archivo.write("\n");
+                    archivo.write(usr.getNombre());
+                    archivo.write("\n");
+                    archivo.write(((Monitor) usr).getCarreraEstud());
+                    archivo.write("\n");
+                    archivo.write(((Monitor) usr).getDocumentoEstud().toString());
+                    archivo.write("\n");
+                    archivo.write("<CursosMonitorEstudiante>");
+
+                    archivo.write("\n");
+                    if(((Monitor) usr).getCursosPertenecenAEstudiante()!=null){
+                        for(Curso curso: ((Monitor) usr).getCursosPertenecenAEstudiante().values()){
+                            if(curso!=null){
+                                archivo.write(curso.getIdCurso().toString());
+                                archivo.write("\n");
+                            }
+
+                        }
+                    }
+                    archivo.write("</CursosMonitorEstudiante>");
+                    archivo.write("\n");
+                    archivo.write("<CursosMonitor>");
+                    archivo.write("\n");
+                    if(((Monitor)usr).getCursosMonitor()!=null){
+                        for(Curso curso: ((Monitor) usr).getCursosMonitor().values()){
+                            if(curso!=null){
+                                archivo.write(curso.getIdCurso().toString());
+                                archivo.write("\n");
+                            }
+                        }
+                    }
+                    archivo.write("</CursosMonitor>");
+                    archivo.write("\n");
+                    archivo.write("</Monitor>");
+                    archivo.write("\n");
+                }
+                else if(usr instanceof Estudiante){
+                    archivo.write("<Estudiante>");
+                    archivo.write("\n");
+                    archivo.write(usr.getUsuario());
+                    archivo.write("\n");
+                    archivo.write(usr.getCorreo());
+                    archivo.write("\n");
+                    archivo.write(usr.getContrasenna());
+                    archivo.write("\n");
+                    archivo.write(usr.getNombre());
+                    archivo.write("\n");
+                    archivo.write(((Estudiante) usr).getCarreraEstud());
+                    archivo.write("\n");
+                    archivo.write(((Estudiante) usr).getDocumentoEstud().toString());
+                    archivo.write("\n");
+                    archivo.write("<CursosEstudiante>");
+
+                    archivo.write("\n");
+                    if(((Estudiante) usr).getCursosPertenecenAEstudiante()!=null){
+                        for(Curso curso: ((Estudiante) usr).getCursosPertenecenAEstudiante().values()){
+                            if(curso!=null){
+                                archivo.write(curso.getIdCurso().toString());
+                                archivo.write("\n");
+                            }
+
+                        }
+                    }
+                    archivo.write("</CursosEstudiante>");
+                    archivo.write("\n");
+                    archivo.write("</Estudiante>");
+                    archivo.write("\n");
+
+
+                }else if(usr instanceof Profesor){
+                    archivo.write("<Profesor>");
+                    archivo.write("\n");
+                    archivo.write(usr.getUsuario());
+                    archivo.write("\n");
+                    archivo.write(usr.getCorreo());
+                    archivo.write("\n");
+                    archivo.write(usr.getContrasenna());
+                    archivo.write("\n");
+                    archivo.write(usr.getNombre());
+                    archivo.write("\n");
+                    archivo.write(String.valueOf(((Profesor) usr).getCedulaProfe()));
+                    archivo.write("\n");
+
+                    archivo.write("<CursosProfesor>");
+                    archivo.write("\n");
+                    if(((Profesor) usr).getCursosPertenecenAProfesor()!=null){
+                        for(Curso curso: ((Profesor) usr).getCursosPertenecenAProfesor().values()) {
+                            if(curso!=null){
+                                archivo.write(curso.getIdCurso().toString());
+                                archivo.write("\n");
+                            }
+
+                        }
+                    }
+
+                    archivo.write("</CursosProfesor>");
+                    archivo.write("\n");
+
+                    archivo.write("</Profesor>");
+                    archivo.write("\n");
+                }else if(usr instanceof Administrativo){
+                    archivo.write("<Administrativo>");
+                    archivo.write("\n");
+                    archivo.write(usr.getUsuario());
+                    archivo.write("\n");
+                    archivo.write(usr.getCorreo());
+                    archivo.write("\n");
+                    archivo.write(usr.getContrasenna());
+                    archivo.write("\n");
+                    archivo.write(usr.getNombre());
+                    archivo.write("\n");
+                    archivo.write(String.valueOf(((Administrativo) usr).getCedulaAdmin()));
+                    archivo.write("\n");
+
+                    archivo.write("</Administrativo>");
+                    archivo.write("\n");
+                }
+            }
+            archivo.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+
+
+        /*controladorGeneral.getReportesUsuarios().setUsuarios(controladorGeneral.getUsuarios());
+        controladorGeneral.getReportesEstudiantes().setUsuarios(controladorGeneral.getControlEstu().getListaEstudiantes());
+        FileChooser.ExtensionFilter filtro = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        File ruta = AlertUtils.openFileChooserModeWrite(filtro, ((Button) event.getSource()).getScene().getWindow());
+        try {
+            if (controladorGeneral.getUsuarios().size() == 0){
+                AlertUtils.alertError("Vacio","Archivo vacio","El archivo esta vacio");
+            }
+            FileUtils.saveXML(ruta, controladorGeneral.getReportesUsuarios());
+            //FileUtils.saveXML(ruta,controladorGeneral.getReportesEstudiantes());
+            AlertUtils.alertConfirmation("Generar reporte", "El reporte de los usuarios se ha generado exitosamente", "Presiona OK para continuar");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            AlertUtils.alertError("Error", "No se pueden obtener los usuarios", "Revise los datos que ingresó e inténtelo de nuevo");
+        } catch (JAXBException jex) {
+            jex.printStackTrace();
+            AlertUtils.alertError("Error", "No se pueden obtener los usuarios", "Revise los datos que ingresó e inténtelo de nuevo");
+        }
+
+        /*OutputStream out;
+        try {
+            out = new FileOutputStream("C:\\Users\\willi\\Documents\\ProyectoIngesoft\\Proyecto\\RaccoonGeeks\\Prueba.xml");
+            java.beans.XMLEncoder encoder = new XMLEncoder(out);
+            for(Usuario usr: controladorGeneral.getControlEstu().getListaEstudiantes().values()){
+                encoder.writeObject(usr);
+            }
+            encoder.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
     }
 }

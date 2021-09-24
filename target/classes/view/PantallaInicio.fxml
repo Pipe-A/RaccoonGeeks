@@ -24,7 +24,6 @@
          <font>
             <Font size="13.0" />
          </font></Text>
-      <Button fx:id="ButtonGenerarArchivo" layoutX="217.0" layoutY="361.0" mnemonicParsing="false" onAction="#generarArchivo" style="-fx-background-color: FF8484; -fx-border-color: 5FEB14;" text="Generar Archivo" />
       <Button fx:id="ButtonIniciarSesion" layoutX="92.0" layoutY="277.0" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="25.0" prefWidth="149.0" text="Iniciar Sesión" />
    </children>
 </Pane>
