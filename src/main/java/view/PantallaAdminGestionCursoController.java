@@ -76,13 +76,43 @@ public class PantallaAdminGestionCursoController {
     }
 
     @FXML
-    void monitoresDelCurso(ActionEvent event) {
-
+    void monitoresDelCurso(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PantallaAdminGestionCursoMonitores.fxml"));
+        Parent root = loader.load();
+        PantallaAdminGestionCursoMonitoresController pantallaAdminGestionCursoMonitoresController = loader.getController();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        stage.setOnCloseRequest(e-> {
+            try {
+                pantallaAdminGestionCursoMonitoresController.regresarCursoPrincipal(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        Stage myStage = (Stage) this.btnMonitoresDelCuso.getScene().getWindow();
+        myStage.close();
     }
 
     @FXML
-    void profesDelCurso(ActionEvent event) {
-
+    void profesDelCurso(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PantallaAdminGestionCursoProfesores.fxml"));
+        Parent root = loader.load();
+        PantallaAdminGestionCursoProfesoresController pantallaAdminGestionCursoProfesoresController = loader.getController();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        stage.setOnCloseRequest(e-> {
+            try {
+                pantallaAdminGestionCursoProfesoresController.regresarCursoPrincipal(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        Stage myStage = (Stage) this.btnProfesDelCurso.getScene().getWindow();
+        myStage.close();
     }
 
     @FXML
