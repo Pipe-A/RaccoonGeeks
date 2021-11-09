@@ -17,6 +17,7 @@ Prog Orient Obj
 angelita123
 </MonitoresCurso>
 <EstudiantesCurso>
+Danielm
 </EstudiantesCurso>
 <ProfesoresCurso>
 Mau123
@@ -47,6 +48,7 @@ Daniel
 Industrial
 12547221
 <CursosEstudiante>
+4f2b49fc-c3a1-4abe-89c5-55135f479682
 </CursosEstudiante>
 </Estudiante>
 <Monitor>
